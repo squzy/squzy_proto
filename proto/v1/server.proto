@@ -1,0 +1,46 @@
+syntax = 'proto3';
+
+package squzy.server.v1.service;
+
+service Server {
+    rpc GetList (GetListRequest) returns (GetListResponse);
+    rpc AddScheduler(AddSchedulerRequest) returns (AddSchedulerResponse);
+}
+
+enum Status {
+    RUNNED = 0;
+    STOPPED = 1;
+}
+
+message SchedulerListItem {
+    string id = 1;
+    Status status = 2;
+}
+
+message GetListRequest {
+}
+
+message GetListResponse {
+    repeated SchedulerListItem list = 1;
+}
+
+message SiteMapCheck {
+    string url = 1;
+}
+
+message TcpCheck {
+    string host = 1;
+    int32 port = 2;
+}
+
+message AddSchedulerRequest {
+    int32 interval = 1;
+    oneof check {
+        TcpCheck tcp_check = 2;
+        SiteMapCheck sitemap_check = 3;
+    }
+}
+
+message AddSchedulerResponse {
+    bool success = 1;
+}
