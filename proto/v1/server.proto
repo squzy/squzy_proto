@@ -4,7 +4,10 @@ package squzy.server.v1.service;
 
 service Server {
     rpc GetList (GetListRequest) returns (GetListResponse);
-    rpc AddScheduler(AddSchedulerRequest) returns (AddSchedulerResponse);
+    rpc AddScheduler (AddSchedulerRequest) returns (AddSchedulerResponse);
+    rpc RemoveScheduler (RemoveSchedulerRequest) returns (RemoveSchedulerResponse);
+    rpc RunScheduler (RunSchedulerRequest) returns (RunSchedulerResponse);
+    rpc StopScheduler (StopSchedulerRequest) returns (StopSchedulerResponse);
 }
 
 enum Status {
@@ -42,5 +45,29 @@ message AddSchedulerRequest {
 }
 
 message AddSchedulerResponse {
-    bool success = 1;
+    string id = 1;
+}
+
+message RemoveSchedulerRequest {
+    string id = 1;
+}
+
+message RemoveSchedulerResponse {
+    string id = 1;
+}
+
+message RunSchedulerRequest {
+    string id = 1;
+}
+
+message StopSchedulerRequest {
+    string id = 1;
+}
+
+message RunSchedulerResponse {
+    string id = 1;
+}
+
+message StopSchedulerResponse {
+    string id = 1;
 }
