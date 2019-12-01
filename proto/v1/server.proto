@@ -36,11 +36,17 @@ message TcpCheck {
     int32 port = 2;
 }
 
+message GrpcCheck {
+    string host = 1;
+    int32 port = 2;
+}
+
 message AddSchedulerRequest {
     int32 interval = 1;
     oneof check {
         TcpCheck tcp_check = 2;
         SiteMapCheck sitemap_check = 3;
+        GrpcCheck grpc_check = 4;
     }
 }
 
