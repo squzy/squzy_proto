@@ -7,6 +7,25 @@ service AgentServer {
     }
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse) {
     };
+
+    rpc GetList(GetListRequest) returns (GetListResponse) {}
+}
+
+enum AgentStatus {
+    RUNNED = 0;
+    STOPPED = 1;
+    DISCONNECTED = 2;
+}
+
+message GetListRequest {}
+
+message GetListResponse {
+    repeated AgentItem agents = 1;
+}
+
+message AgentItem {
+    string id = 1;
+    AgentStatus status = 2;
 }
 
 message HostInformation {
