@@ -1,0 +1,97 @@
+syntax = 'proto3';
+
+package squzy.agents.v1.agent;
+
+service AgentServer {
+    rpc Register (RegisterRequest) returns (RegisterResponse) {
+    }
+    rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse) {
+    };
+}
+
+message HostInformation {
+    string host_name = 1;
+    string os = 2;
+    PlatformInfo platform = 3;
+}
+
+message PlatformInfo {
+    string name = 1;
+    string family = 2;
+    string version = 3;
+}
+
+message RegisterRequest {
+    HostInformation host_information = 1;
+}
+
+message RegisterResponse {
+    string id = 1;
+}
+
+message UnRegisterRequest {
+    string id = 1;
+}
+
+message UnRegisterResponse {
+    string id = 1;
+}
+
+// Description of agent
+
+service Agent {
+    rpc GetStats(GetStatsRequest) returns (stream GetStatsResponse) {};
+}
+
+message GetStatsRequest {
+
+}
+
+message GetStatsResponse {
+    CpuInfo cpu_info = 1;
+    MemoryInfo memory_info = 2;
+    DiskInfo disk_info = 3;
+    NetInfo net_info = 4;
+}
+
+message CpuInfo {
+    message CPU {
+        float load = 1;
+    }
+    repeated CPU cpus = 1;
+}
+
+message MemoryInfo {
+    message Memory {
+        int64 total = 1;
+        int64 used = 2;
+        int64 free = 3;
+        int64 shared = 4;
+        float usedPercent = 5;
+    }
+    Memory mem = 1;
+    Memory swap = 2;
+}
+
+message DiskInfo {
+    int64 total = 1;
+    int64 free = 2;
+    int64 used = 3;
+    float usedPercent = 4;
+}
+
+message NetInfo {
+    int64 bytesSent = 1;
+    int64 bytesRecv = 2;
+    int64 packetsSent = 3;
+    int64 packetsRecv = 4;
+    // total number of errors while receiving
+    int64 errIn = 5;
+    // total number of errors while sending
+    int64 errOut = 6;
+    // total number of incoming packets which were dropped
+    int64 dropIn = 7;
+    // total number of outgoing packets which were dropped (always 0 on OSX and BSD)
+    int64 dropOut = 8;
+}
+
