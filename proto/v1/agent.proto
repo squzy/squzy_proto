@@ -75,7 +75,7 @@ message GetStatsResponse {
 
 message CpuInfo {
     message CPU {
-        float load = 1;
+        double load = 1;
     }
     repeated CPU cpus = 1;
 }
@@ -86,7 +86,7 @@ message MemoryInfo {
         int64 used = 2;
         int64 free = 3;
         int64 shared = 4;
-        float usedPercent = 5;
+        double usedPercent = 5;
     }
     Memory mem = 1;
     Memory swap = 2;
@@ -96,7 +96,7 @@ message DiskInfo {
     int64 total = 1;
     int64 free = 2;
     int64 used = 3;
-    float usedPercent = 4;
+    double usedPercent = 4;
 }
 
 message NetInfo {
