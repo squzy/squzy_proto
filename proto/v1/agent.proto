@@ -8,7 +8,8 @@ service AgentServer {
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse) {
     };
 
-    rpc GetList(GetListRequest) returns (GetListResponse) {}
+    rpc GetList (GetListRequest) returns (GetListResponse) {
+    }
 }
 
 enum AgentStatus {
@@ -17,7 +18,8 @@ enum AgentStatus {
     DISCONNECTED = 2;
 }
 
-message GetListRequest {}
+message GetListRequest {
+}
 
 message GetListResponse {
     repeated AgentItem agents = 1;
@@ -59,7 +61,8 @@ message UnRegisterResponse {
 // Description of agent
 
 service Agent {
-    rpc GetStats(GetStatsRequest) returns (stream GetStatsResponse) {};
+    rpc GetStats (GetStatsRequest) returns (stream GetStatsResponse) {
+    };
 }
 
 message GetStatsRequest {
@@ -93,10 +96,13 @@ message MemoryInfo {
 }
 
 message DiskInfo {
-    uint64 total = 1;
-    uint64 free = 2;
-    uint64 used = 3;
-    double usedPercent = 4;
+    message Disk {
+        uint64 total = 1;
+        uint64 free = 2;
+        uint64 used = 3;
+        double usedPercent = 4;
+    }
+    map<string, Disk> disks = 1;
 }
 
 message NetInfo {
