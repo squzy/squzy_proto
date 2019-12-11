@@ -82,10 +82,10 @@ message CpuInfo {
 
 message MemoryInfo {
     message Memory {
-        int64 total = 1;
-        int64 used = 2;
-        int64 free = 3;
-        int64 shared = 4;
+        uint64 total = 1;
+        uint64 used = 2;
+        uint64 free = 3;
+        uint64 shared = 4;
         double usedPercent = 5;
     }
     Memory mem = 1;
@@ -93,24 +93,24 @@ message MemoryInfo {
 }
 
 message DiskInfo {
-    int64 total = 1;
-    int64 free = 2;
-    int64 used = 3;
+    uint64 total = 1;
+    uint64 free = 2;
+    uint64 used = 3;
     double usedPercent = 4;
 }
 
 message NetInfo {
-    int64 bytesSent = 1;
-    int64 bytesRecv = 2;
-    int64 packetsSent = 3;
-    int64 packetsRecv = 4;
+    uint64 bytesSent = 1;
+    uint64 bytesRecv = 2;
+    uint64 packetsSent = 3;
+    uint64 packetsRecv = 4;
     // total number of errors while receiving
-    int64 errIn = 5;
+    uint64 errIn = 5;
     // total number of errors while sending
-    int64 errOut = 6;
+    uint64 errOut = 6;
     // total number of incoming packets which were dropped
-    int64 dropIn = 7;
+    uint64 dropIn = 7;
     // total number of outgoing packets which were dropped (always 0 on OSX and BSD)
-    int64 dropOut = 8;
+    uint64 dropOut = 8;
 }
 
