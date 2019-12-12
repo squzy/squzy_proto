@@ -3,11 +3,8 @@ syntax = 'proto3';
 package squzy.agents.v1.agent;
 
 service AgentServer {
-    rpc Register (RegisterRequest) returns (RegisterResponse) {
+    rpc Register (stream SendStat) returns (stream RegisterResponse) {
     }
-    rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse) {
-    };
-
     rpc GetList (GetListRequest) returns (GetListResponse) {
     }
 }
@@ -30,10 +27,10 @@ message AgentItem {
     AgentStatus status = 2;
 }
 
-message HostInformation {
+message HostInfo {
     string host_name = 1;
     string os = 2;
-    PlatformInfo platform = 3;
+    PlatformInfo platform_info = 3;
 }
 
 message PlatformInfo {
@@ -42,38 +39,18 @@ message PlatformInfo {
     string version = 3;
 }
 
-message RegisterRequest {
-    HostInformation host_information = 1;
-}
-
 message RegisterResponse {
-    string id = 1;
-}
-
-message UnRegisterRequest {
-    string id = 1;
-}
-
-message UnRegisterResponse {
     string id = 1;
 }
 
 // Description of agent
 
-service Agent {
-    rpc GetStats (GetStatsRequest) returns (stream GetStatsResponse) {
-    };
-}
-
-message GetStatsRequest {
-
-}
-
-message GetStatsResponse {
-    CpuInfo cpu_info = 1;
-    MemoryInfo memory_info = 2;
-    DiskInfo disk_info = 3;
-    NetInfo net_info = 4;
+message SendStat {
+    HostInfo hostInfo = 1;
+    CpuInfo cpu_info = 2;
+    MemoryInfo memory_info = 3;
+    DiskInfo disk_info = 4;
+    NetInfo net_info = 5;
 }
 
 message CpuInfo {
