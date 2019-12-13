@@ -2,6 +2,8 @@ syntax = 'proto3';
 
 package squzy.agents.v1.agent;
 
+import "google/protobuf/timestamp.proto";
+
 service AgentServer {
     rpc Register (stream SendStat) returns (stream RegisterResponse) {
     }
@@ -51,6 +53,7 @@ message SendStat {
     MemoryInfo memory_info = 3;
     DiskInfo disk_info = 4;
     NetInfo net_info = 5;
+    google.protobuf.Timestamp time = 6;
 }
 
 message CpuInfo {
