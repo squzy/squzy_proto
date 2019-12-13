@@ -5,7 +5,7 @@ package squzy.agents.v1.agent;
 import "google/protobuf/timestamp.proto";
 
 service AgentServer {
-    rpc Register (RegisterRequest) returns (stream RegisterResponse) {
+    rpc Register (RegisterRequest) returns (RegisterResponse) {
     }
     rpc UnRegister(UnRegisterRequest) returns (UnRegisterResponse) {}
     rpc SendStat(stream SendStatRequest) returns (SendStatResponse) {}
