@@ -36,6 +36,7 @@ message MetaData {
 
 message SendLogMessageRequest {
     Log log = 1;
+    string schedulerId = 2;
 }
 
 message SendLogMessageResponse {
