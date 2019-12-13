@@ -5,8 +5,10 @@ package squzy.agents.v1.agent;
 import "google/protobuf/timestamp.proto";
 
 service AgentServer {
-    rpc Register (stream SendStat) returns (stream RegisterResponse) {
+    rpc Register (RegisterRequest) returns (stream RegisterResponse) {
     }
+    rpc UnRegister(UnRegisterRequest) returns (UnRegisterResponse) {}
+    rpc SendStat(stream SendStat) returns (SendStatResponse) {}
     rpc GetList (GetListRequest) returns (GetListResponse) {
     }
 }
@@ -22,6 +24,22 @@ message GetListRequest {
 
 message GetListResponse {
     repeated AgentItem agents = 1;
+}
+
+message SendStatResponse {
+
+}
+
+message UnRegisterRequest {
+    string id = 1;
+}
+
+message UnRegisterResponse {
+    string id = 1;
+}
+
+message RegisterRequest {
+    HostInfo hostInfo = 1;
 }
 
 message AgentItem {
@@ -48,7 +66,6 @@ message RegisterResponse {
 // Description of agent
 
 message SendStat {
-    HostInfo hostInfo = 1;
     CpuInfo cpu_info = 2;
     MemoryInfo memory_info = 3;
     DiskInfo disk_info = 4;
