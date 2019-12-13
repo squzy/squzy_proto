@@ -8,7 +8,7 @@ service AgentServer {
     rpc Register (RegisterRequest) returns (stream RegisterResponse) {
     }
     rpc UnRegister(UnRegisterRequest) returns (UnRegisterResponse) {}
-    rpc SendStat(stream SendStat) returns (SendStatResponse) {}
+    rpc SendStat(stream SendStatRequest) returns (SendStatResponse) {}
     rpc GetList (GetListRequest) returns (GetListResponse) {
     }
 }
@@ -65,7 +65,7 @@ message RegisterResponse {
 
 // Description of agent
 
-message SendStat {
+message SendStatRequest {
     CpuInfo cpu_info = 2;
     MemoryInfo memory_info = 3;
     DiskInfo disk_info = 4;
