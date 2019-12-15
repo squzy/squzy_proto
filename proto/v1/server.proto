@@ -64,7 +64,7 @@ message PostgresCheck {
 message CassandraCheck {
     string cluster = 1;
     string user = 2;
-    int32 password = 3;
+    string password = 3;
 }
 
 message MysqlCheck {
