@@ -66,6 +66,7 @@ message RegisterResponse {
 // Description of agent
 
 message SendStatRequest {
+    string id = 1;
     CpuInfo cpu_info = 2;
     MemoryInfo memory_info = 3;
     DiskInfo disk_info = 4;
