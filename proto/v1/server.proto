@@ -29,6 +29,7 @@ message GetListResponse {
 
 message SiteMapCheck {
     string url = 1;
+    int32 maxWorkers = 2;
 }
 
 message TcpCheck {
