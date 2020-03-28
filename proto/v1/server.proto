@@ -76,6 +76,25 @@ message MysqlCheck {
     string password = 5;
 }
 
+message HttpJsonValueCheck {
+    string method = 1;
+    string url = 2;
+    map<string, string> headers = 3;
+    repeated Selectors selectors = 4;
+    enum Type {
+        String = 0;
+        Bool = 1;
+        Int = 2;
+        Float = 3;
+        Time = 4;
+        Any = 5;
+    }
+    message Selectors {
+        Type type = 1;
+        string path = 2;
+    }
+}
+
 message AddSchedulerRequest {
     int32 interval = 1;
     oneof check {
@@ -87,6 +106,7 @@ message AddSchedulerRequest {
         PostgresCheck postgres_check = 7;
         CassandraCheck cassandra_check = 8;
         MysqlCheck mysql_check = 9;
+        HttpJsonValueCheck http_json_value = 10;
     }
 }
 
