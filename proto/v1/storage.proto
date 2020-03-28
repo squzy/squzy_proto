@@ -3,6 +3,7 @@ syntax = 'proto3';
 package squzy.storage.v1.service;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 
 service Logger {
     rpc SendLogMessage (SendLogMessageRequest) returns (SendLogMessageResponse);
@@ -28,6 +29,7 @@ message Log {
     StatusCode code = 1;
     string description = 2;
     MetaData meta = 3;
+    google.protobuf.Struct value = 4;
 }
 
 message MetaData {
