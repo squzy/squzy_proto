@@ -87,6 +87,7 @@ message HttpJsonValueCheck {
         Number = 2;
         Time = 3;
         Any = 4;
+        Raw = 5;
     }
     message Selectors {
         Type type = 1;
