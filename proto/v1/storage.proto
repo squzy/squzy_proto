@@ -18,6 +18,7 @@ enum Type {
     PostgresDb = 5;
     CassandraDb = 6;
     MysqlDb = 7;
+    JsonHttpValue = 8;
 }
 
 enum StatusCode {
