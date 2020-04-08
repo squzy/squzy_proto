@@ -104,17 +104,20 @@ message DiskInfo {
 }
 
 message NetInfo {
-    uint64 bytesSent = 1;
-    uint64 bytesRecv = 2;
-    uint64 packetsSent = 3;
-    uint64 packetsRecv = 4;
-    // total number of errors while receiving
-    uint64 errIn = 5;
-    // total number of errors while sending
-    uint64 errOut = 6;
-    // total number of incoming packets which were dropped
-    uint64 dropIn = 7;
-    // total number of outgoing packets which were dropped (always 0 on OSX and BSD)
-    uint64 dropOut = 8;
+    message Interface {
+        uint64 bytesSent = 1;
+        uint64 bytesRecv = 2;
+        uint64 packetsSent = 3;
+        uint64 packetsRecv = 4;
+        // total number of errors while receiving
+        uint64 errIn = 5;
+        // total number of errors while sending
+        uint64 errOut = 6;
+        // total number of incoming packets which were dropped
+        uint64 dropIn = 7;
+        // total number of outgoing packets which were dropped (always 0 on OSX and BSD)
+        uint64 dropOut = 8;
+    }
+    map<string, Interface> interfaces = 1;
 }
 
