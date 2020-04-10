@@ -96,17 +96,16 @@ message HttpJsonValueCheck {
 }
 
 message AddSchedulerRequest {
+    // How often we need execute check
     int32 interval = 1;
+    // Timeout for check request
+    int32 timeout = 2;
     oneof check {
-        TcpCheck tcp_check = 2;
-        SiteMapCheck sitemap_check = 3;
-        GrpcCheck grpc_check = 4;
-        HttpCheck http_check = 5;
-        MongoCheck mongo_check = 6;
-        PostgresCheck postgres_check = 7;
-        CassandraCheck cassandra_check = 8;
-        MysqlCheck mysql_check = 9;
-        HttpJsonValueCheck http_json_value = 10;
+        TcpCheck tcp_check = 3;
+        SiteMapCheck sitemap_check = 4;
+        GrpcCheck grpc_check = 5;
+        HttpCheck http_check = 6;
+        HttpJsonValueCheck http_json_value = 7;
     }
 }
 
