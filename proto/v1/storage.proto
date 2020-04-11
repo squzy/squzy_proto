@@ -14,11 +14,7 @@ enum Type {
     Grpc = 1;
     Http = 2;
     SiteMap = 3;
-    MongoDb = 4;
-    PostgresDb = 5;
-    CassandraDb = 6;
-    MysqlDb = 7;
-    HttpJsonValue = 8;
+    HttpJsonValue = 4;
 }
 
 enum StatusCode {
