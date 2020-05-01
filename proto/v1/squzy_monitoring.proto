@@ -1,0 +1,136 @@
+syntax = 'proto3';
+
+package squzy.v1.monitoring;
+
+// Squzy Monitoring service for periodic execute schedulers
+
+service Scheduler {
+    rpc GetList (GetListRequest) returns (GetListResponse);
+    rpc GetById (GetByIdRequest) returns (Scheduler);
+    rpc Add (AddRequest) returns (AddResponse);
+    rpc Remove (RemoveRequest) returns (RemoveResponse);
+    rpc Run (RunRequest) returns (RunResponse);
+    rpc Stop (StopRequest) returns (StopResponse);
+}
+
+enum Status {
+    RUNNED = 0;
+    STOPPED = 1;
+}
+
+enum Type {
+    Tcp = 0;
+    Grpc = 1;
+    Http = 2;
+    SiteMap = 3;
+    HttpJsonValue = 4;
+}
+
+message GetByIdRequest {
+    string id = 1;
+}
+
+message Scheduler {
+    string id = 1;
+    Type type = 2;
+    Status status = 3;
+    oneof config {
+        TcpConfig tcp = 4;
+        SiteMapConfig sitemap = 5;
+        GrpcConfig grpc = 6;
+        HttpConfig http = 7;
+        HttpJsonValueConfig httpValue = 8;
+    }
+}
+
+message GetListRequest {
+}
+
+message GetListResponse {
+    repeated Scheduler list = 1;
+}
+
+message SiteMapConfig {
+    string url = 1;
+    int32 concurrency = 2;
+}
+
+message TcpConfig {
+    string host = 1;
+    int32 port = 2;
+}
+
+message GrpcConfig {
+    string service = 1;
+    string host = 2;
+    int32 port = 3;
+}
+
+message HttpConfig {
+    string method = 1;
+    string url = 2;
+    map<string, string> headers = 3;
+    int32 statusCode = 4;
+}
+
+message HttpJsonValueConfig {
+    string method = 1;
+    string url = 2;
+    map<string, string> headers = 3;
+    repeated Selectors selectors = 4;
+    enum Type {
+        String = 0;
+        Bool = 1;
+        Number = 2;
+        Time = 3;
+        Any = 4;
+        Raw = 5;
+    }
+    message Selectors {
+        Type type = 1;
+        string path = 2;
+    }
+}
+
+message AddRequest {
+    // How often we need execute check
+    int32 interval = 1;
+    // Timeout for check request
+    int32 timeout = 2;
+    // Config of the scheduler;
+    oneof config {
+        TcpConfig tcp = 3;
+        SiteMapConfig sitemap = 4;
+        GrpcConfig grpc = 5;
+        HttpConfig http = 6;
+        HttpJsonValueConfig httpValue = 7;
+    }
+}
+
+message AddResponse {
+    string id = 1;
+}
+
+message RemoveRequest {
+    string id = 1;
+}
+
+message RemoveResponse {
+    string id = 1;
+}
+
+message RunRequest {
+    string id = 1;
+}
+
+message StopRequest {
+    string id = 1;
+}
+
+message RunResponse {
+    string id = 1;
+}
+
+message StopResponse {
+    string id = 1;
+}

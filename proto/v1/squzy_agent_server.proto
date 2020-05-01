@@ -1,0 +1,74 @@
+syntax = 'proto3';
+
+package squzy.v1.agent;
+
+import "google/protobuf/timestamp.proto";
+
+service Server {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetListResponse);
+    rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse)
+    rpc GetList (GetListRequest) returns (GetListResponse);
+}
+
+enum Status {
+    // Agent is runned but not send stat yet
+    REGISTRED = 0;
+    // Actually send stat
+    RUNNED = 1;
+    // Stopped to send stat
+    DISCONNECTED = 2;
+    // Unregistred
+    UNREGISTRED = 3;
+}
+
+message GetListRequest {
+}
+
+message GetByAgentUniqNameRequest {
+    string agentUniqName = 1;
+}
+
+message GetListResponse {
+    repeated AgentItem agents = 1;
+}
+
+message SendStatResponse {
+
+}
+
+message UnRegisterRequest {
+    string id = 1;
+}
+
+message UnRegisterResponse {
+    string id = 1;
+}
+
+message RegisterRequest {
+    // Name form env
+    string agentUniqName = 1;
+    HostInfo hostInfo = 2;
+}
+
+message AgentItem {
+    string id = 1;
+    string agentUniqName = 2;
+    Status status = 3;
+}
+
+message HostInfo {
+    string host_name = 1;
+    string os = 2;
+    PlatformInfo platform_info = 3;
+}
+
+message PlatformInfo {
+    string name = 1;
+    string family = 2;
+    string version = 3;
+}
+
+message RegisterResponse {
+    string id = 1;
+}
