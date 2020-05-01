@@ -16,6 +16,7 @@ service Scheduler {
 enum Status {
     RUNNED = 0;
     STOPPED = 1;
+    REMOVED = 3;
 }
 
 enum Type {
