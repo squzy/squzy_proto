@@ -8,11 +8,22 @@ import "squzy_proto/proto/v1/squzy_monitoring.proto";
 import "squzy_proto/proto/v1/squzy_agent_server.proto";
 
 service Storage {
+    //To save info about checkers
     rpc SendResponseFromScheduler (SchedulerResponse) returns (SendResponseFromSchedulerRequest);
-    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (SendResponseFromAgentResponse)
+    //To save info about agent
+    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (SendResponseFromAgentResponse);
+    //To send info about checkers
+    rpc GetSchedulerInformation(GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
+    //To send info about about agent
+    rpc GetAgentInformation(GetAgentInformationRequest) returns (squzy.v1.agent.SendMetricsRequest);
 }
 
 message SchedulerResponse {
+    string schedulerId = 1;
+    Snapshot snapshot = 2;
+}
+
+message Snapshot {
     enum Code {
         OK = 0;
         Error = 1;
@@ -25,13 +36,38 @@ message SchedulerResponse {
         google.protobuf.Timestamp endTime = 2;
         google.protobuf.Value value = 3;
     }
-    string schedulerId = 1;
     Code code = 2;
     squzy.v1.monitoring.Type type = 3;
     Error error = 4;
     MetaData meta = 5;
 }
 
-message SendResponseFromSchedulerRequest{}
+message SendResponseFromSchedulerRequest {
+    oneof config {
+        string okResult = 1;
+        Error error = 2;
+    }
+}
 
-message SendResponseFromAgentResponse{}
+message Error {
+    string description = 1;
+}
+
+message SendResponseFromAgentResponse{
+    oneof config {
+        string okResult = 1;
+        Error error = 2;
+    }
+}
+
+message GetSchedulerInformationRequest{
+    string schedulerId = 1;
+}
+
+message GetSchedulerInformationResponse {
+    repeated Snapshot snapshots = 1;
+}
+
+message GetAgentInformationRequest{
+    string agentId = 1;
+}
