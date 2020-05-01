@@ -19,7 +19,7 @@ enum Status {
     REMOVED = 3;
 }
 
-enum Type {
+enum SchedulerType {
     Tcp = 0;
     Grpc = 1;
     Http = 2;
@@ -33,7 +33,7 @@ message GetByIdRequest {
 
 message Scheduler {
     string id = 1;
-    Type type = 2;
+    SchedulerType type = 2;
     Status status = 3;
     oneof config {
         TcpConfig tcp = 4;
@@ -79,7 +79,7 @@ message HttpJsonValueConfig {
     string url = 2;
     map<string, string> headers = 3;
     repeated Selectors selectors = 4;
-    enum Type {
+    enum JsonValueParseType {
         String = 0;
         Bool = 1;
         Number = 2;
@@ -88,7 +88,7 @@ message HttpJsonValueConfig {
         Raw = 5;
     }
     message Selectors {
-        Type type = 1;
+        JsonValueParseType type = 1;
         string path = 2;
     }
 }

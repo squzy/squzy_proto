@@ -8,16 +8,17 @@ import "proto/v1/squzy_monitoring.proto";
 import "proto/v1/squzy_agent_server.proto";
 import "proto/v1/shared.proto";
 
+enum SchedulerResponseCode {
+    OK = 0;
+    Error = 1;
+}
+
 service Storage {
     rpc SendResponseFromScheduler (SchedulerResponse) returns (squzy.v1.shared.Empty);
     rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (squzy.v1.shared.Empty);
 }
 
 message SchedulerResponse {
-    enum Code {
-        OK = 0;
-        Error = 1;
-    }
     message Error {
         string message = 1;
     }
@@ -27,8 +28,8 @@ message SchedulerResponse {
         google.protobuf.Value value = 3;
     }
     string schedulerId = 1;
-    Code code = 2;
-    squzy.v1.monitoring.Type type = 3;
+    SchedulerResponseCode code = 2;
+    squzy.v1.monitoring.SchedulerType type = 3;
     Error error = 4;
     MetaData meta = 5;
 }
