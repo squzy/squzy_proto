@@ -4,11 +4,13 @@ package squzy.v1.monitoring;
 
 option go_package="api";
 
+import "google/protobuf/empty.proto";
+
 // Squzy Monitoring service for periodic execute schedulers
 
 service SchedulersExecutor {
-    rpc GetList (GetListRequest) returns (GetListResponse);
-    rpc GetById (GetByIdRequest) returns (Scheduler);
+    rpc GetSchedulerList (google.protobuf.Empty) returns (GetSchedulerListResponse);
+    rpc GetSchedulerById (GetSchedulerByIdRequest) returns (Scheduler);
     rpc Add (AddRequest) returns (AddResponse);
     rpc Remove (RemoveRequest) returns (RemoveResponse);
     rpc Run (RunRequest) returns (RunResponse);
@@ -29,7 +31,7 @@ enum SchedulerType {
     HttpJsonValue = 4;
 }
 
-message GetByIdRequest {
+message GetSchedulerByIdRequest {
     string id = 1;
 }
 
@@ -46,10 +48,10 @@ message Scheduler {
     }
 }
 
-message GetListRequest {
+message GetSchedulerListRequest {
 }
 
-message GetListResponse {
+message GetSchedulerListResponse {
     repeated Scheduler list = 1;
 }
 

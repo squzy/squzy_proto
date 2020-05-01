@@ -11,7 +11,7 @@ service AgentServer {
     rpc Register (RegisterRequest) returns (RegisterResponse);
     rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetListResponse);
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
-    rpc GetList (GetListRequest) returns (GetListResponse);
+    rpc GetAgentList (google.protobuf.Empty) returns (GetListResponse);
     rpc SendMetrics(stream SendMetricsRequest) returns (google.protobuf.Empty);
 }
 
@@ -87,9 +87,6 @@ enum Status {
     DISCONNECTED = 2;
     // Unregistred
     UNREGISTRED = 3;
-}
-
-message GetListRequest {
 }
 
 message GetByAgentUniqNameRequest {
