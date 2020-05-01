@@ -4,7 +4,7 @@ package squzy.v1.monitoring;
 
 // Squzy Monitoring service for periodic execute schedulers
 
-service Scheduler {
+service SchedulersExecutor {
     rpc GetList (GetListRequest) returns (GetListResponse);
     rpc GetById (GetByIdRequest) returns (Scheduler);
     rpc Add (AddRequest) returns (AddResponse);

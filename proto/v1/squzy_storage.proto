@@ -10,7 +10,7 @@ import "proto/v1/shared.proto";
 
 service Storage {
     rpc SendResponseFromScheduler (SchedulerResponse) returns (squzy.v1.shared.Empty);
-    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (squzy.v1.shared.Empty)
+    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (squzy.v1.shared.Empty);
 }
 
 message SchedulerResponse {
