@@ -6,10 +6,11 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
 import "squzy_proto/proto/v1/squzy_monitoring.proto";
 import "squzy_proto/proto/v1/squzy_agent_server.proto";
+import "squzy_proto/proto/v1/shared.proto";
 
 service Storage {
-    rpc SendResponseFromScheduler (SchedulerResponse) returns (SendResponseFromSchedulerRequest);
-    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (SendResponseFromAgentResponse)
+    rpc SendResponseFromScheduler (SchedulerResponse) returns (squzy.v1.shared.Empty);
+    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (squzy.v1.shared.Empty)
 }
 
 message SchedulerResponse {
@@ -31,7 +32,3 @@ message SchedulerResponse {
     Error error = 4;
     MetaData meta = 5;
 }
-
-message SendResponseFromSchedulerRequest{}
-
-message SendResponseFromAgentResponse{}
