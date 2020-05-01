@@ -7,7 +7,7 @@ option go_package="api";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
-service Server {
+service AgentServer {
     rpc Register (RegisterRequest) returns (RegisterResponse);
     rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetListResponse);
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
