@@ -9,9 +9,9 @@ import "google/protobuf/empty.proto";
 
 service AgentServer {
     rpc Register (RegisterRequest) returns (RegisterResponse);
-    rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetListResponse);
+    rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetAgentListResponse);
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
-    rpc GetAgentList (google.protobuf.Empty) returns (GetListResponse);
+    rpc GetAgentList (google.protobuf.Empty) returns (GetAgentListResponse);
     rpc SendMetrics(stream SendMetricsRequest) returns (google.protobuf.Empty);
 }
 
@@ -93,12 +93,8 @@ message GetByAgentUniqNameRequest {
     string agentUniqName = 1;
 }
 
-message GetListResponse {
+message GetAgentListResponse {
     repeated AgentItem agents = 1;
-}
-
-message SendStatResponse {
-
 }
 
 message UnRegisterRequest {
