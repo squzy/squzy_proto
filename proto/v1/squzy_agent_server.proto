@@ -3,7 +3,7 @@ syntax = 'proto3';
 package squzy.v1.agent;
 
 import "google/protobuf/timestamp.proto";
-import "squzy_proto/proto/v1/shared.proto";
+import "proto/v1/shared.proto";
 
 service Server {
     rpc Register (RegisterRequest) returns (RegisterResponse);
