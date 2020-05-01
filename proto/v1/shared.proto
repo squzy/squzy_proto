@@ -1,5 +1,0 @@
-syntax = 'proto3';
-
-package squzy.v1.shared;
-
-message Empty {}

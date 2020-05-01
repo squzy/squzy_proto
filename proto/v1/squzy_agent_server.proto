@@ -3,14 +3,14 @@ syntax = 'proto3';
 package squzy.v1.agent;
 
 import "google/protobuf/timestamp.proto";
-import "proto/v1/shared.proto";
+import "google/protobuf/empty.proto";
 
 service Server {
     rpc Register (RegisterRequest) returns (RegisterResponse);
     rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetListResponse);
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
     rpc GetList (GetListRequest) returns (GetListResponse);
-    rpc SendMetrics(stream SendMetricsRequest) returns (squzy.v1.shared.Empty);
+    rpc SendMetrics(stream SendMetricsRequest) returns (google.protobuf.Empty);
 }
 
 message SendMetricsRequest {

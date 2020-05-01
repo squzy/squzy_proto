@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
 import "proto/v1/squzy_monitoring.proto";
 import "proto/v1/squzy_agent_server.proto";
-import "proto/v1/shared.proto";
+import "google/protobuf/empty.proto";
 
 enum SchedulerResponseCode {
     OK = 0;
@@ -14,8 +14,8 @@ enum SchedulerResponseCode {
 }
 
 service Storage {
-    rpc SendResponseFromScheduler (SchedulerResponse) returns (squzy.v1.shared.Empty);
-    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (squzy.v1.shared.Empty);
+    rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
+    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (google.protobuf.Empty);
 }
 
 message SchedulerResponse {
