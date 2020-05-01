@@ -17,7 +17,7 @@ service SchedulersExecutor {
     rpc Stop (StopRequest) returns (StopResponse);
 }
 
-enum Status {
+enum SchedulerStatus {
     RUNNED = 0;
     STOPPED = 1;
     REMOVED = 3;
@@ -38,7 +38,7 @@ message GetSchedulerByIdRequest {
 message Scheduler {
     string id = 1;
     SchedulerType type = 2;
-    Status status = 3;
+    SchedulerStatus status = 3;
     oneof config {
         TcpConfig tcp = 4;
         SiteMapConfig sitemap = 5;

@@ -78,7 +78,7 @@ message NetInfo {
     map<string, Interface> interfaces = 1;
 }
 
-enum Status {
+enum AgentStatus {
     // Agent is runned but not send stat yet
     REGISTRED = 0;
     // Actually send stat
@@ -114,7 +114,7 @@ message RegisterRequest {
 message AgentItem {
     string id = 1;
     string agentUniqName = 2;
-    Status status = 3;
+    AgentStatus status = 3;
 }
 
 message HostInfo {
