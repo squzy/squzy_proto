@@ -2,6 +2,8 @@ syntax = 'proto3';
 
 package squzy.v1.agent;
 
+option go_package="api";
+
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 

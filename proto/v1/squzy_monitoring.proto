@@ -2,6 +2,8 @@ syntax = 'proto3';
 
 package squzy.v1.monitoring;
 
+option go_package="api";
+
 // Squzy Monitoring service for periodic execute schedulers
 
 service SchedulersExecutor {
