@@ -36,7 +36,7 @@ message Snapshot {
         OK = 0;
         Error = 1;
     }
-    message Error {
+    message SnapshotError {
         string message = 1;
     }
     message MetaData {
@@ -46,25 +46,25 @@ message Snapshot {
     }
     Code code = 2;
     squzy.v1.monitoring.SchedulerType type = 3;
-    Error error = 4;
+    SnapshotError error = 4;
     MetaData meta = 5;
 }
 
 message SendResponseFromSchedulerRequest {
     oneof config {
         string okResult = 1;
-        Error error = 2;
+        StrorageError error = 2;
     }
 }
 
-message Error {
+message StrorageError {
     string description = 1;
 }
 
 message SendResponseFromAgentResponse{
     oneof config {
         string okResult = 1;
-        Error error = 2;
+        StrorageError error = 2;
     }
 }
 
