@@ -2,14 +2,17 @@ syntax = 'proto3';
 
 package squzy.v1.agent;
 
-import "google/protobuf/timestamp.proto";
+option go_package="api";
 
-service Server {
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service AgentServer {
     rpc Register (RegisterRequest) returns (RegisterResponse);
-    rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetListResponse);
-    rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse)
-    rpc GetList (GetListRequest) returns (GetListResponse);
-    rpc SendMetrics(stream SendMetricsRequest) returns (SendMetricsRequestResponse);
+    rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetAgentListResponse);
+    rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
+    rpc GetAgentList (google.protobuf.Empty) returns (GetAgentListResponse);
+    rpc SendMetrics(stream SendMetricsRequest) returns (google.protobuf.Empty);
 }
 
 message SendMetricsRequest {
@@ -75,7 +78,7 @@ message NetInfo {
     map<string, Interface> interfaces = 1;
 }
 
-enum Status {
+enum AgentStatus {
     // Agent is runned but not send stat yet
     REGISTRED = 0;
     // Actually send stat
@@ -86,19 +89,12 @@ enum Status {
     UNREGISTRED = 3;
 }
 
-message GetListRequest {
-}
-
 message GetByAgentUniqNameRequest {
     string agentUniqName = 1;
 }
 
-message GetListResponse {
+message GetAgentListResponse {
     repeated AgentItem agents = 1;
-}
-
-message SendStatResponse {
-
 }
 
 message UnRegisterRequest {
@@ -118,7 +114,7 @@ message RegisterRequest {
 message AgentItem {
     string id = 1;
     string agentUniqName = 2;
-    Status status = 3;
+    AgentStatus status = 3;
 }
 
 message HostInfo {

@@ -2,24 +2,28 @@ syntax = 'proto3';
 
 package squzy.v1.monitoring;
 
+option go_package="api";
+
+import "google/protobuf/empty.proto";
+
 // Squzy Monitoring service for periodic execute schedulers
 
-service Scheduler {
-    rpc GetList (GetListRequest) returns (GetListResponse);
-    rpc GetById (GetByIdRequest) returns (Scheduler);
+service SchedulersExecutor {
+    rpc GetSchedulerList (google.protobuf.Empty) returns (GetSchedulerListResponse);
+    rpc GetSchedulerById (GetSchedulerByIdRequest) returns (Scheduler);
     rpc Add (AddRequest) returns (AddResponse);
     rpc Remove (RemoveRequest) returns (RemoveResponse);
     rpc Run (RunRequest) returns (RunResponse);
     rpc Stop (StopRequest) returns (StopResponse);
 }
 
-enum Status {
+enum SchedulerStatus {
     RUNNED = 0;
     STOPPED = 1;
     REMOVED = 3;
 }
 
-enum Type {
+enum SchedulerType {
     Tcp = 0;
     Grpc = 1;
     Http = 2;
@@ -27,14 +31,14 @@ enum Type {
     HttpJsonValue = 4;
 }
 
-message GetByIdRequest {
+message GetSchedulerByIdRequest {
     string id = 1;
 }
 
 message Scheduler {
     string id = 1;
-    Type type = 2;
-    Status status = 3;
+    SchedulerType type = 2;
+    SchedulerStatus status = 3;
     oneof config {
         TcpConfig tcp = 4;
         SiteMapConfig sitemap = 5;
@@ -44,10 +48,10 @@ message Scheduler {
     }
 }
 
-message GetListRequest {
+message GetSchedulerListRequest {
 }
 
-message GetListResponse {
+message GetSchedulerListResponse {
     repeated Scheduler list = 1;
 }
 
@@ -79,7 +83,7 @@ message HttpJsonValueConfig {
     string url = 2;
     map<string, string> headers = 3;
     repeated Selectors selectors = 4;
-    enum Type {
+    enum JsonValueParseType {
         String = 0;
         Bool = 1;
         Number = 2;
@@ -88,7 +92,7 @@ message HttpJsonValueConfig {
         Raw = 5;
     }
     message Selectors {
-        Type type = 1;
+        JsonValueParseType type = 1;
         string path = 2;
     }
 }

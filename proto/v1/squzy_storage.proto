@@ -2,10 +2,18 @@ syntax = 'proto3';
 
 package squzy.v1.storage;
 
+option go_package="api";
+
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
-import "squzy_proto/proto/v1/squzy_monitoring.proto";
-import "squzy_proto/proto/v1/squzy_agent_server.proto";
+import "proto/v1/squzy_monitoring.proto";
+import "proto/v1/squzy_agent_server.proto";
+import "google/protobuf/empty.proto";
+
+enum SchedulerResponseCode {
+    OK = 0;
+    Error = 1;
+}
 
 service Storage {
     //To save info about checkers
@@ -37,7 +45,7 @@ message Snapshot {
         google.protobuf.Value value = 3;
     }
     Code code = 2;
-    squzy.v1.monitoring.Type type = 3;
+    squzy.v1.monitoring.SchedulerType type = 3;
     Error error = 4;
     MetaData meta = 5;
 }
