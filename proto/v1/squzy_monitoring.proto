@@ -2,7 +2,7 @@ syntax = 'proto3';
 
 package squzy.v1.monitoring;
 
-option go_package="api";
+option go_package = "api";
 
 import "google/protobuf/empty.proto";
 
@@ -39,12 +39,17 @@ message Scheduler {
     string id = 1;
     SchedulerType type = 2;
     SchedulerStatus status = 3;
+    // How often we need execute check
+    int32 interval = 4;
+    // Timeout for check request
+    int32 timeout = 5;
+    // Config of the scheduler;
     oneof config {
-        TcpConfig tcp = 4;
-        SiteMapConfig sitemap = 5;
-        GrpcConfig grpc = 6;
-        HttpConfig http = 7;
-        HttpJsonValueConfig httpValue = 8;
+        TcpConfig tcp = 6;
+        SiteMapConfig sitemap = 7;
+        GrpcConfig grpc = 8;
+        HttpConfig http = 9;
+        HttpJsonValueConfig httpValue = 10;
     }
 }
 
@@ -102,7 +107,6 @@ message AddRequest {
     int32 interval = 1;
     // Timeout for check request
     int32 timeout = 2;
-    // Config of the scheduler;
     oneof config {
         TcpConfig tcp = 3;
         SiteMapConfig sitemap = 4;
