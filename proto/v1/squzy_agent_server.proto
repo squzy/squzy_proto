@@ -103,13 +103,13 @@ message UnRegisterResponse {
 
 message RegisterRequest {
     // Name form env
-    string agentUniqName = 1;
+    string agentName = 1;
     HostInfo hostInfo = 2;
 }
 
 message AgentItem {
     string id = 1;
-    string agentUniqName = 2;
+    string agentName = 2;
     AgentStatus status = 3;
 }
 
