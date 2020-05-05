@@ -2,17 +2,17 @@ syntax = 'proto3';
 
 package squzy.v1.agent;
 
-option go_package="api";
+option go_package = "api";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
 service AgentServer {
     rpc Register (RegisterRequest) returns (RegisterResponse);
-    rpc GetByAgentUniqName (GetByAgentUniqNameRequest) returns (GetAgentListResponse);
+    rpc GetByAgentName (GetByAgentNameRequest) returns (GetAgentListResponse);
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
     rpc GetAgentList (google.protobuf.Empty) returns (GetAgentListResponse);
-    rpc SendMetrics(stream SendMetricsRequest) returns (google.protobuf.Empty);
+    rpc SendMetrics (stream SendMetricsRequest) returns (google.protobuf.Empty);
 }
 
 message SendMetricsRequest {
@@ -25,10 +25,6 @@ message SendMetricsRequest {
     DiskInfo disk_info = 5;
     NetInfo net_info = 6;
     google.protobuf.Timestamp time = 7;
-}
-
-message SendMetricsRequestResponse {
-
 }
 
 message CpuInfo {
@@ -89,8 +85,8 @@ enum AgentStatus {
     UNREGISTRED = 3;
 }
 
-message GetByAgentUniqNameRequest {
-    string agentUniqName = 1;
+message GetByAgentNameRequest {
+    string agentName = 1;
 }
 
 message GetAgentListResponse {
