@@ -10,6 +10,7 @@ import "google/protobuf/empty.proto";
 service AgentServer {
     rpc Register (RegisterRequest) returns (RegisterResponse);
     rpc GetByAgentName (GetByAgentNameRequest) returns (GetAgentListResponse);
+    rpc GetAgentById (GetAgentByIdRequest) returns (AgentItem);
     rpc UnRegister (UnRegisterRequest) returns (UnRegisterResponse);
     rpc GetAgentList (google.protobuf.Empty) returns (GetAgentListResponse);
     rpc SendMetrics (stream SendMetricsRequest) returns (google.protobuf.Empty);
@@ -25,6 +26,10 @@ message SendMetricsRequest {
     DiskInfo disk_info = 5;
     NetInfo net_info = 6;
     google.protobuf.Timestamp time = 7;
+}
+
+message GetAgentByIdRequest  {
+    string agent_id = 1;
 }
 
 message CpuInfo {
