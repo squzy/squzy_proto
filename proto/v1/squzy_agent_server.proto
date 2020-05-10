@@ -116,6 +116,7 @@ message AgentItem {
     string id = 1;
     string agentName = 2;
     AgentStatus status = 3;
+    HostInfo hostInfo = 4;
 }
 
 message HostInfo {
