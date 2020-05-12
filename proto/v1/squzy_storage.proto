@@ -17,9 +17,9 @@ enum SchedulerResponseCode {
 
 service Storage {
     //To save info about checkers
-    rpc SendResponseFromScheduler (SchedulerResponse) returns (SendResponseFromSchedulerRequest);
+    rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
     //To save info about agent
-    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (SendResponseFromAgentResponse);
+    rpc SendResponseFromAgent(squzy.v1.agent.Metric) returns (google.protobuf.Empty);
     //To send info about checkers
     rpc GetSchedulerInformation(GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
     //To send info about about agent
