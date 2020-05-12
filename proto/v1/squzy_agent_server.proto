@@ -34,7 +34,8 @@ message SendMetricsRequest {
         Disconnect disconnect = 2;
     }
     message Disconnect {
-        google.protobuf.Timestamp time = 7;
+        string agentId = 1;
+        google.protobuf.Timestamp time = 2;
     }
 }
 
