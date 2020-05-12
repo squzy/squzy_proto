@@ -17,7 +17,7 @@ enum SchedulerResponseCode {
 
 service Storage {
     rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
-    rpc SendResponseFromAgent(squzy.v1.agent.SendMetricsRequest) returns (google.protobuf.Empty);
+    rpc SendResponseFromAgent(squzy.v1.agent.Metric) returns (google.protobuf.Empty);
 }
 
 message SchedulerResponse {
