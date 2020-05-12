@@ -100,6 +100,7 @@ message GetAgentListResponse {
 
 message UnRegisterRequest {
     string id = 1;
+    google.protobuf.Timestamp time = 2;
 }
 
 message UnRegisterResponse {
@@ -110,6 +111,7 @@ message RegisterRequest {
     // Name form env
     string agentName = 1;
     HostInfo hostInfo = 2;
+    google.protobuf.Timestamp time = 3;
 }
 
 message AgentItem {
