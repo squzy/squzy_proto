@@ -89,9 +89,10 @@ message GetAgentInformationRequest {
 message GetAgentInformationResponse {
     repeated Statistic stats = 1;
     message Statistic {
-        squzy.v1.agent.CpuInfo cpu_info = 1;
-        squzy.v1.agent.MemoryInfo memory_info = 2;
-        squzy.v1.agent.DiskInfo disk_info = 3;
-        squzy.v1.agent.NetInfo net_info = 4;
+        google.protobuf.Timestamp time = 1;
+        squzy.v1.agent.CpuInfo cpu_info = 2;
+        squzy.v1.agent.MemoryInfo memory_info = 3;
+        squzy.v1.agent.DiskInfo disk_info = 4;
+        squzy.v1.agent.NetInfo net_info = 5;
     }
 }
