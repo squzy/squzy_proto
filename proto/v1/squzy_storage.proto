@@ -72,6 +72,7 @@ message GetSchedulerInformationRequest {
 
 message GetSchedulerInformationResponse {
     repeated SchedulerSnapshot snapshots = 1;
+    int32 count = 2;
 }
 
 message GetAgentInformationRequest {
@@ -83,6 +84,7 @@ message GetAgentInformationRequest {
 
 message GetAgentInformationResponse {
     repeated Statistic stats = 1;
+    int32 count = 2;
     message Statistic {
         google.protobuf.Timestamp time = 1;
         squzy.v1.agent.CpuInfo cpu_info = 2;
