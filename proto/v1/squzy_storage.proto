@@ -10,11 +10,6 @@ import "proto/v1/squzy_monitoring.proto";
 import "proto/v1/squzy_agent_server.proto";
 import "google/protobuf/empty.proto";
 
-enum SchedulerResponseCode {
-    OK = 0;
-    Error = 1;
-}
-
 service Storage {
     //To save info about checkers
     rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
