@@ -2,94 +2,100 @@ syntax = 'proto3';
 
 package squzy.v1.storage;
 
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/v1/squzy_agent_server.proto";
+import "proto/v1/squzy_monitoring.proto";
+
 option go_package = "api";
 
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/struct.proto";
-import "proto/v1/squzy_monitoring.proto";
-import "proto/v1/squzy_agent_server.proto";
-import "google/protobuf/empty.proto";
-
 service Storage {
-    //To save info about checkers
-    rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
-    //To save info about agent
-    rpc SendResponseFromAgent (squzy.v1.agent.Metric) returns (google.protobuf.Empty);
-    //To send info about checkers
-    rpc GetSchedulerInformation (GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
-    //To send info about about agent
-    rpc GetAgentInformation (GetAgentInformationRequest) returns (GetAgentInformationResponse);
+  //To save info about checkers
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
+  //To save info about agent
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc SendResponseFromAgent (squzy.v1.agent.Metric) returns (google.protobuf.Empty);
+  //To send info about checkers
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetSchedulerInformation (GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
+  //To send info about about agent
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetAgentInformation (GetAgentInformationRequest) returns (GetAgentInformationResponse);
 }
 
 enum TypeAgentStat {
-    ALL = 0;
-    CPU = 1;
-    DISK = 2;
-    MEMORY = 3;
-    NET = 4;
+  UNSPECIFIED = 0;
+  ALL = 1;
+  CPU = 2;
+  DISK = 3;
+  MEMORY = 4;
+  NET = 5;
 }
 
 enum SchedulerCode {
-    OK = 0;
-    Error = 1;
+  UNSPECIFIED = 0;
+  OK = 1;
+  ERROR = 2;
 }
 
 message SchedulerResponse {
-    string schedulerId = 1;
-    SchedulerSnapshot snapshot = 2;
+  string scheduler_id = 1;
+  SchedulerSnapshot snapshot = 2;
 }
 
 message SchedulerSnapshot {
-    message Error {
-        string message = 1;
-    }
-    message MetaData {
-        google.protobuf.Timestamp startTime = 1;
-        google.protobuf.Timestamp endTime = 2;
-        google.protobuf.Value value = 3;
-    }
-    SchedulerCode code = 2;
-    squzy.v1.monitoring.SchedulerType type = 3;
-    Error error = 4;
-    MetaData meta = 5;
+  message Error {
+    string message = 1;
+  }
+  message MetaData {
+    google.protobuf.Timestamp start_time = 1;
+    google.protobuf.Timestamp end_time = 2;
+    google.protobuf.Value value = 3;
+  }
+  SchedulerCode code = 2;
+  squzy.v1.monitoring.SchedulerType type = 3;
+  Error error = 4;
+  MetaData meta = 5;
 }
 
 message TimeFilter {
-    google.protobuf.Timestamp from = 1; // nil = not set start time
-    google.protobuf.Timestamp to = 2; // nil = not set end time
+  google.protobuf.Timestamp from = 1; // nil = not set start time
+  google.protobuf.Timestamp to = 2; // nil = not set end time
 }
 
 message Pagination {
-    int32 page = 1; // default 0
-    int32 limit = 2; // default 20
+  int32 page = 1; // default 0
+  int32 limit = 2; // default 20
 }
 
 message GetSchedulerInformationRequest {
-    string schedulerId = 1;
-    Pagination pagination = 2; // if nil means all record
-    TimeFilter time_range = 3; // nil not set (filter by start time)
+  string scheduler_id = 1;
+  Pagination pagination = 2; // if nil means all record
+  TimeFilter time_range = 3; // nil not set (filter by start time)
 }
 
 message GetSchedulerInformationResponse {
-    repeated SchedulerSnapshot snapshots = 1;
-    int32 count = 2;
+  repeated SchedulerSnapshot snapshots = 1;
+  int32 count = 2;
 }
 
 message GetAgentInformationRequest {
-    string agentId = 1;
-    TypeAgentStat type = 2;
-    Pagination pagination = 3; // nil no pagination
-    TimeFilter time_range = 4; // nil not set (filter by timestamp)
+  string agent_id = 1;
+  TypeAgentStat type = 2;
+  Pagination pagination = 3; // nil no pagination
+  TimeFilter time_range = 4; // nil not set (filter by timestamp)
 }
 
 message GetAgentInformationResponse {
-    repeated Statistic stats = 1;
-    int32 count = 2;
-    message Statistic {
-        google.protobuf.Timestamp time = 1;
-        squzy.v1.agent.CpuInfo cpu_info = 2;
-        squzy.v1.agent.MemoryInfo memory_info = 3;
-        squzy.v1.agent.DiskInfo disk_info = 4;
-        squzy.v1.agent.NetInfo net_info = 5;
-    }
+  repeated Statistic stats = 1;
+  int32 count = 2;
+  message Statistic {
+    google.protobuf.Timestamp time = 1;
+    squzy.v1.agent.CpuInfo cpu_info = 2;
+    squzy.v1.agent.MemoryInfo memory_info = 3;
+    squzy.v1.agent.DiskInfo disk_info = 4;
+    squzy.v1.agent.NetInfo net_info = 5;
+  }
 }
