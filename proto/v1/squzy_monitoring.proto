@@ -20,7 +20,7 @@ service SchedulersExecutor {
 
 enum SchedulerStatus {
   // Initial status
-  UNSPECIFIED = 0;
+  SCHEDULER_STATUS_UNSPECIFIED = 0;
 
   RUNNED = 1;
   STOPPED = 2;
@@ -29,7 +29,7 @@ enum SchedulerStatus {
 
 enum SchedulerType {
   // Initial status
-  UNSPECIFIED = 0;
+  SCHEDULER_TYPE_UNSPECIFIED = 0;
 
   TCP = 1;
   GRPC = 2;
@@ -94,7 +94,7 @@ message HttpJsonValueConfig {
   repeated Selectors selectors = 4;
   enum JsonValueParseType {
     // Initial status
-    UNSPECIFIED = 0;
+    JSON_PARSE_VALUE_UNSPECIFIED = 0;
     STRING = 1;
     BOOL = 2;
     NUMBER = 3;

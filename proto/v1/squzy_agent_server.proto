@@ -94,7 +94,7 @@ message NetInfo {
 
 enum AgentStatus {
   // Initial status
-  UNSPECIFIED = 0;
+  AGENT_STATUS_UNSPECIFIED = 0;
   // Agent is runned but not send stat yet
   REGISTRED = 1;
   // Actually send stat
