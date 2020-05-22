@@ -1,57 +1,57 @@
 syntax = 'proto3';
 
-package squzy.v1.application_monitoring;
+package squzy.v1.applicationmonitoring;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 service ApplicationMonitoring {
-    rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
-    rpc SaveSegment (SegmentInfo) returns (google.protobuf.Empty);
+  rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
+  rpc SaveSegment (SegmentInfo) returns (google.protobuf.Empty);
 }
 
 enum CallStatus {
-    TRANSACTION_CODE_UNSPECIFIED = 0;
-    SUCCESSFUL = 1;
-    FAILED = 2;
+  TRANSACTION_CODE_UNSPECIFIED = 0;
+  SUCCESSFUL = 1;
+  FAILED = 2;
 }
 
 enum CallType {
-    CALL_TYPE_UNSPECIFIED = 0;
-    CALL_TYPE_XHR = 1;
-    CALL_TYPE_FETCH = 2;
-    CALL_TYPE_WEBSOCKET = 3;
-    CALL_TYPE_HTTP = 4;
-    CAll_TYPE_GRPC = 5;
-    CALL_TYPE_DB = 6;
+  CALL_TYPE_UNSPECIFIED = 0;
+  CALL_TYPE_XHR = 1;
+  CALL_TYPE_FETCH = 2;
+  CALL_TYPE_WEBSOCKET = 3;
+  CALL_TYPE_HTTP = 4;
+  CALL_TYPE_GRPC = 5;
+  CALL_TYPE_DB = 6;
 }
 
 message Error {
-    string message = 1;
+  string message = 1;
 }
 
 message SegmentInfo {
-    string id = 1;
-    CallMeta meta = 2;
-    string transaction_id  = 3;
-    google.protobuf.Timestamp start_time = 4;
-    google.protobuf.Timestamp end_time = 5;
-    CallStatus status = 6;
-    CallType call_type = 7;
-    Error error = 8;
+  string id = 1;
+  CallMeta meta = 2;
+  string transaction_id  = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  CallStatus status = 6;
+  CallType call_type = 7;
+  Error error = 8;
 }
 
 message CallMeta {
-    string host = 1;
-    string path = 2;
+  string host = 1;
+  string path = 2;
 }
 
 message TransactionInfo {
-    string id = 1;
-    CallMeta meta = 2;
-    string name = 3;
-    google.protobuf.Timestamp start_time = 4;
-    google.protobuf.Timestamp end_time = 5;
-    CallStatus status = 6;
-    Error error = 7;
+  string id = 1;
+  CallMeta meta = 2;
+  string name = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  CallStatus status = 6;
+  Error error = 7;
 }
