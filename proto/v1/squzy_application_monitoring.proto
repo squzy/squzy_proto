@@ -1,9 +1,11 @@
 syntax = 'proto3';
 
-package squzy.v1.applicationmonitoring;
+package squzy.v1.monitoring;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+
+option go_package = "api";
 
 service ApplicationMonitoring {
   rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
@@ -34,11 +36,13 @@ message SegmentInfo {
   string id = 1;
   CallMeta meta = 2;
   string transaction_id  = 3;
-  google.protobuf.Timestamp start_time = 4;
-  google.protobuf.Timestamp end_time = 5;
-  CallStatus status = 6;
-  CallType call_type = 7;
-  Error error = 8;
+  // name of segment
+  string name = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp end_time = 6;
+  CallStatus status = 7;
+  CallType call_type = 8;
+  Error error = 9;
 }
 
 message CallMeta {
