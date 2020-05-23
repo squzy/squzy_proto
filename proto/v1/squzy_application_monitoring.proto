@@ -48,10 +48,13 @@ message CallMeta {
 
 message TransactionInfo {
   string id = 1;
-  CallMeta meta = 2;
-  string name = 3;
-  google.protobuf.Timestamp start_time = 4;
-  google.protobuf.Timestamp end_time = 5;
-  CallStatus status = 6;
-  Error error = 7;
+  // Application id from regitration request
+  string application_id = 2;
+  CallMeta meta = 3;
+  // Name of transactions
+  string name = 4;
+  google.protobuf.Timestamp start_time = 5;
+  google.protobuf.Timestamp end_time = 6;
+  CallStatus status = 7;
+  Error error = 8;
 }
