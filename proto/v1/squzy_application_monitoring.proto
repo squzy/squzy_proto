@@ -8,8 +8,21 @@ import "google/protobuf/timestamp.proto";
 option go_package = "api";
 
 service ApplicationMonitoring {
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc InitializeApplication (ApplicationInfo) returns (InitializeApplicationResponse);
   rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
   rpc SaveSegment (SegmentInfo) returns (google.protobuf.Empty);
+}
+
+message ApplicationInfo {
+  // Uniq name provided from developer
+  string name = 1;
+  // host name
+  string host_name = 2;
+}
+
+message InitializeApplicationResponse {
+  string application_id = 1;
 }
 
 enum CallStatus {
@@ -52,7 +65,7 @@ message CallMeta {
 
 message TransactionInfo {
   string id = 1;
-  // Application id from regitration request
+  // Application id from init request
   string application_id = 2;
   CallMeta meta = 3;
   // Name of transactions
