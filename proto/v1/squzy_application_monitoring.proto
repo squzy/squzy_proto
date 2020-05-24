@@ -11,7 +11,6 @@ service ApplicationMonitoring {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc InitializeApplication (ApplicationInfo) returns (InitializeApplicationResponse);
   rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
-  rpc SaveSegment (SegmentInfo) returns (google.protobuf.Empty);
 }
 
 message ApplicationInfo {
@@ -25,37 +24,26 @@ message InitializeApplicationResponse {
   string application_id = 1;
 }
 
-enum CallStatus {
+enum TransactionStatus {
   TRANSACTION_CODE_UNSPECIFIED = 0;
-  SUCCESSFUL = 1;
-  FAILED = 2;
+  TRANSACTION_SUCCESSFUL = 1;
+  TRANSACTION_FAILED = 2;
 }
 
-enum CallType {
-  CALL_TYPE_UNSPECIFIED = 0;
-  CALL_TYPE_XHR = 1;
-  CALL_TYPE_FETCH = 2;
-  CALL_TYPE_WEBSOCKET = 3;
-  CALL_TYPE_HTTP = 4;
-  CALL_TYPE_GRPC = 5;
-  CALL_TYPE_DB = 6;
+enum TransactionType {
+  TRANSACTION_TYPE_UNSPECIFIED = 0;
+  TRANSACTION_TYPE_XHR = 1;
+  TRANSACTION_TYPE_FETCH = 2;
+  TRANSACTION_TYPE_WEBSOCKET = 3;
+  TRANSACTION_TYPE_HTTP = 4;
+  TRANSACTION_TYPE_GRPC = 5;
+  TRANSACTION_TYPE_DB = 6;
+  TRANSACTION_TYPE_INTERNAL = 7;
+  TRANSACTION_TYPE_ROUTER = 8;
 }
 
 message Error {
   string message = 1;
-}
-
-message SegmentInfo {
-  string id = 1;
-  CallMeta meta = 2;
-  string transaction_id  = 3;
-  // name of segment
-  string name = 4;
-  google.protobuf.Timestamp start_time = 5;
-  google.protobuf.Timestamp end_time = 6;
-  CallStatus status = 7;
-  CallType call_type = 8;
-  Error error = 9;
 }
 
 message CallMeta {
@@ -67,11 +55,15 @@ message TransactionInfo {
   string id = 1;
   // Application id from init request
   string application_id = 2;
-  CallMeta meta = 3;
+  // Parent transaction id, if "" - then first transaction
+  string parent_id = 3;
+  // Meta about request
+  CallMeta meta = 4;
   // Name of transactions
-  string name = 4;
-  google.protobuf.Timestamp start_time = 5;
-  google.protobuf.Timestamp end_time = 6;
-  CallStatus status = 7;
-  Error error = 8;
+  string name = 5;
+  google.protobuf.Timestamp start_time = 6;
+  google.protobuf.Timestamp end_time = 7;
+  TransactionStatus status = 8;
+  TransactionType type = 9;
+  Error error = 10;
 }
