@@ -42,15 +42,6 @@ enum TransactionType {
   TRANSACTION_TYPE_ROUTER = 8;
 }
 
-message Error {
-  string message = 1;
-}
-
-message CallMeta {
-  string host = 1;
-  string path = 2;
-}
-
 message TransactionInfo {
   string id = 1;
   // Application id from init request
@@ -58,7 +49,7 @@ message TransactionInfo {
   // Parent transaction id, if "" - then first transaction
   string parent_id = 3;
   // Meta about request
-  CallMeta meta = 4;
+  Meta meta = 4;
   // Name of transactions
   string name = 5;
   google.protobuf.Timestamp start_time = 6;
@@ -66,4 +57,11 @@ message TransactionInfo {
   TransactionStatus status = 8;
   TransactionType type = 9;
   Error error = 10;
+  message Error {
+    string message = 1;
+  }
+  message Meta {
+    string host = 1;
+    string path = 2;
+  }
 }
