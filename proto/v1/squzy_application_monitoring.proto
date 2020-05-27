@@ -22,6 +22,7 @@ message ApplicationInfo {
 
 message InitializeApplicationResponse {
   string application_id = 1;
+  string tracing_header = 2;
 }
 
 enum TransactionStatus {
