@@ -44,19 +44,20 @@ message GetSchedulerByIdRequest {
 
 message Scheduler {
   string id = 1;
-  SchedulerType type = 2;
-  SchedulerStatus status = 3;
+  string name = 2;
+  SchedulerType type = 3;
+  SchedulerStatus status = 4;
   // How often we need execute check
-  int32 interval = 4;
+  int32 interval = 5;
   // Timeout for check request
-  int32 timeout = 5;
+  int32 timeout = 6;
   // Config of the scheduler;
   oneof config {
-    TcpConfig tcp = 6;
-    SiteMapConfig sitemap = 7;
-    GrpcConfig grpc = 8;
-    HttpConfig http = 9;
-    HttpJsonValueConfig http_value = 10;
+    TcpConfig tcp = 7;
+    SiteMapConfig sitemap = 8;
+    GrpcConfig grpc = 9;
+    HttpConfig http = 10;
+    HttpJsonValueConfig http_value = 11;
   }
 }
 
@@ -113,12 +114,13 @@ message AddRequest {
   int32 interval = 1;
   // Timeout for check request
   int32 timeout = 2;
+  string name = 3;
   oneof config {
-    TcpConfig tcp = 3;
-    SiteMapConfig sitemap = 4;
-    GrpcConfig grpc = 5;
-    HttpConfig http = 6;
-    HttpJsonValueConfig http_value = 7;
+    TcpConfig tcp = 4;
+    SiteMapConfig sitemap = 5;
+    GrpcConfig grpc = 6;
+    HttpConfig http = 7;
+    HttpJsonValueConfig http_value = 8;
   }
 }
 
