@@ -51,7 +51,7 @@ message TransactionInfo {
   string parent_id = 3;
   // Meta about request
   Meta meta = 4;
-  // Name of transactions
+  // Name of transactions (should be uniq per application)
   string name = 5;
   google.protobuf.Timestamp start_time = 6;
   google.protobuf.Timestamp end_time = 7;
