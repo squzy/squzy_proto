@@ -31,7 +31,25 @@ service Storage {
   rpc GetTransactionsGroup(GetTransactionGroupRequest) returns (GetTransactionGroupResponse);
   // Returns list of transaction via filter
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetTransaction(GetTransactionsRequest) returns (GetTransactionsResponse);
+  rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetTransactionById(GetTransactionByIdRequest) returns (squzy.v1.monitoring.TransactionInfo);
+}
+
+message GetTransactionByNameRequest {
+  string application_id = 1;
+  string transaction_name = 2;
+  Pagination pagination = 3;
+  TimeFilter time_range = 4;
+}
+
+message GetTransactionByNameResponse {
+  int64 count = 1;
+  repeated squzy.v1.monitoring.TransactionInfo transactions = 2;
+}
+
+message GetTransactionByIdRequest {
+  string transaction_id = 1;
 }
 
 message GetTransactionsResponse {
@@ -40,23 +58,44 @@ message GetTransactionsResponse {
 }
 
 message GetTransactionsRequest {
-  string application_id = 1;
-  GroupTransaction group_type  = 2;
-  Pagination pagination = 3;
-  TimeFilter time_range = 4;
-  oneof filter {
-    string id = 5;
-    string host = 6;
-    string name = 7;
-    string method = 8;
-    string path = 9;
+  string application_id = 1; // if empty then ignore
+  Pagination pagination = 2;
+  TimeFilter time_range = 3;
+  squzy.v1.monitoring.TransactionType type = 4;
+  HostFilter host = 5;
+  NameFilter name = 6;
+  PathFilter path = 7;
+  MethodFilter method = 8;
+  SortTransactionList sort = 9;
+  message HostFilter {
+    string host = 1;
+  }
+  message NameFilter {
+    string name = 1;
+  }
+  message PathFilter {
+    string path = 1;
+  }
+  message MethodFilter {
+    string method = 1;
   }
 }
 
-enum SortTransaction {
-  SORT_TRANSACTION_UNSPECIFIED = 0;
+message SortingTransactionList {
+  SortTransactionList sort_by = 1;
+  SortDirection direction = 2;
+}
+
+enum SortTransactionList {
+  SORT_TRANSACTION_LIST_UNSPECIFIED = 0;
+  DURATION = 1;
+}
+
+enum SortTransactionGroup {
+  SORT_TRANSACTION_GROUP_UNSPECIFIED = 0;
   AVERAGE_TIME = 1;
   COUNT = 2;
+  CONSUMING_TIME = 3;
 }
 
 enum SortDirection {
@@ -67,10 +106,11 @@ enum SortDirection {
 
 enum GroupTransaction {
   GROUP_TRANSACTION_UNSPECIFIED = 0;
-  BY_NAME = 1;
-  BY_METHOD = 2;
-  BY_HOST = 3;
-  BY_PATH = 4;
+  BY_TYPE = 1;
+  BY_NAME = 2;
+  BY_METHOD = 3;
+  BY_HOST = 4;
+  BY_PATH = 5;
 }
 
 enum TypeAgentStat {
@@ -95,11 +135,11 @@ message GetTransactionGroupRequest {
   GroupTransaction group_type  = 4; // how we will group transactions
   squzy.v1.monitoring.TransactionType type = 5;
   squzy.v1.monitoring.TransactionStatus status = 6;
-  SortingTransaction sort = 7;
+  SortingGroupTransaction sort = 7;
 }
 
-message SortingTransaction {
-  SortTransaction sort_by = 1;
+message SortingGroupTransaction {
+  SortTransactionGroup sort_by = 1;
   SortDirection direction = 2;
 }
 
