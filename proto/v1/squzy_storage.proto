@@ -33,7 +33,12 @@ service Storage {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse);
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetTransactionById(GetTransactionByIdRequest) returns (squzy.v1.monitoring.TransactionInfo);
+  rpc GetTransactionById(GetTransactionByIdRequest) returns (GetTransactionByIdRequest);
+}
+
+message GetTransactionByIdRequest {
+  squzy.v1.monitoring.TransactionInfo transaction = 1;
+  repeated squzy.v1.monitoring.TransactionInfo children = 2;
 }
 
 message GetTransactionByNameRequest {

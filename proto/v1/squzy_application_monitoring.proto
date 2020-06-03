@@ -11,6 +11,7 @@ service ApplicationMonitoring {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc InitializeApplication (ApplicationInfo) returns (InitializeApplicationResponse);
   rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
+  rpc GetApplicationById(GetApplicationByIdRequest) returns (ApplicationInfo);
 }
 
 message ApplicationInfo {
