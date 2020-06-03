@@ -11,7 +11,25 @@ service ApplicationMonitoring {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc InitializeApplication (ApplicationInfo) returns (InitializeApplicationResponse);
   rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
-  rpc GetApplicationById(GetApplicationByIdRequest) returns (ApplicationInfo);
+  rpc GetApplicationById(GetApplicationByIdRequest) returns (Application);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetApplicationList(google.protobuf.Empty) returns (GetApplicationListResponse);
+}
+
+message GetApplicationByIdRequest {
+  string application_id = 1;
+}
+
+message GetApplicationListResponse {
+  repeated Application applications = 1;
+}
+
+message Application {
+  string id = 1;
+  // Uniq name provided from developer
+  string name = 2;
+  // host name
+  string host_name = 3;
 }
 
 message ApplicationInfo {
