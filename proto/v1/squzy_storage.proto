@@ -23,6 +23,8 @@ service Storage {
   rpc SaveTransaction(squzy.v1.monitoring.TransactionInfo) returns (google.protobuf.Empty);
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetSchedulerInformation (GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetSchedulerUptime(GetSchedulerUptimeRequest) returns (GetSchedulerUptimeResponse);
   //To send info about about agent
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetAgentInformation (GetAgentInformationRequest) returns (GetAgentInformationResponse);
@@ -34,6 +36,16 @@ service Storage {
   rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse);
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetTransactionById(GetTransactionByIdRequest) returns (GetTransactionByIdResponse);
+}
+
+message GetSchedulerUptimeRequest {
+  string scheduler_id = 1;
+  TimeFilter time_range = 2;
+}
+
+message GetSchedulerUptimeResponse {
+  double uptime = 1;
+  double latency = 2;
 }
 
 message GetTransactionByIdResponse {
@@ -107,6 +119,13 @@ enum SortDirection {
   SORT_DIRECTION_UNSPECIFIED = 0;
   ASC = 1;
   DESC = 2;
+}
+
+enum SortSchedulerList {
+  SORT_SCHEDULER_LIST_UNSPECIFIED = 0;
+  BY_START_TIME = 1;
+  BY_END_TIME = 2;
+  BY_LATENCY  = 3;
 }
 
 enum GroupTransaction {
@@ -187,10 +206,17 @@ message Pagination {
   int32 limit = 2; // default 20
 }
 
+message SortingSchedulerList {
+  SortSchedulerList sort_by = 1;
+  SortDirection direction = 2;
+}
+
 message GetSchedulerInformationRequest {
   string scheduler_id = 1;
   Pagination pagination = 2; // if nil means all record
   TimeFilter time_range = 3; // nil not set (filter by start time)
+  SortingSchedulerList sort = 4; // sort for table
+  SchedulerCode status = 5; // filter for table
 }
 
 message GetSchedulerInformationResponse {
