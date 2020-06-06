@@ -136,6 +136,7 @@ message AgentItem {
   string agent_name = 2;
   AgentStatus status = 3;
   HostInfo host_info = 4;
+  int64 interval = 5;
 }
 
 message HostInfo {
