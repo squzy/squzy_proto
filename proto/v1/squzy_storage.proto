@@ -5,6 +5,7 @@ package squzy.v1.storage;
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 import "proto/v1/squzy_agent_server.proto";
 import "proto/v1/squzy_application_monitoring.proto";
 import "proto/v1/squzy_monitoring.proto";
@@ -79,23 +80,14 @@ message GetTransactionsRequest {
   Pagination pagination = 2;
   TimeFilter time_range = 3;
   squzy.v1.monitoring.TransactionType type = 4;
-  HostFilter host = 5;
-  NameFilter name = 6;
-  PathFilter path = 7;
-  MethodFilter method = 8;
-  SortTransactionList sort = 9;
-  message HostFilter {
-    string host = 1;
-  }
-  message NameFilter {
-    string name = 1;
-  }
-  message PathFilter {
-    string path = 1;
-  }
-  message MethodFilter {
-    string method = 1;
-  }
+  squzy.v1.monitoring.TransactionStatus status = 5;
+  // filter is not exists
+  google.protobuf.StringValue host = 6;
+  google.protobuf.StringValue name = 7;
+  google.protobuf.StringValue path = 8;
+  google.protobuf.StringValue method = 9;
+
+  SortTransactionList sort = 10;
 }
 
 message SortingTransactionList {
