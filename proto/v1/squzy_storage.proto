@@ -24,18 +24,18 @@ service Storage {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetSchedulerInformation (GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetSchedulerUptime(GetSchedulerUptimeRequest) returns (GetSchedulerUptimeResponse);
+  rpc GetSchedulerUptime (GetSchedulerUptimeRequest) returns (GetSchedulerUptimeResponse);
   //To send info about about agent
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetAgentInformation (GetAgentInformationRequest) returns (GetAgentInformationResponse);
   // Return grouped transactions via group
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetTransactionsGroup(GetTransactionGroupRequest) returns (GetTransactionGroupResponse);
+  rpc GetTransactionsGroup (GetTransactionGroupRequest) returns (GetTransactionGroupResponse);
   // Returns list of transaction via filter
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetTransactions(GetTransactionsRequest) returns (GetTransactionsResponse);
+  rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse);
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetTransactionById(GetTransactionByIdRequest) returns (GetTransactionByIdResponse);
+  rpc GetTransactionById (GetTransactionByIdRequest) returns (GetTransactionByIdResponse);
 }
 
 message GetSchedulerUptimeRequest {
