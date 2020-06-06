@@ -108,13 +108,6 @@ enum SortTransactionList {
   DURATION = 1;
 }
 
-enum SortTransactionGroup {
-  SORT_TRANSACTION_GROUP_UNSPECIFIED = 0;
-  AVERAGE_TIME = 1;
-  COUNT = 2;
-  CONSUMING_TIME = 3;
-}
-
 enum SortDirection {
   SORT_DIRECTION_UNSPECIFIED = 0;
   ASC = 1;
@@ -159,12 +152,6 @@ message GetTransactionGroupRequest {
   GroupTransaction group_type  = 4; // how we will group transactions
   squzy.v1.monitoring.TransactionType type = 5;
   squzy.v1.monitoring.TransactionStatus status = 6;
-  SortingGroupTransaction sort = 7;
-}
-
-message SortingGroupTransaction {
-  SortTransactionGroup sort_by = 1;
-  SortDirection direction = 2;
 }
 
 message TransactionGroup {
