@@ -87,7 +87,7 @@ message GetTransactionsRequest {
   google.protobuf.StringValue path = 8;
   google.protobuf.StringValue method = 9;
 
-  SortTransactionList sort = 10;
+  SortingTransactionList sort = 10;
 }
 
 message SortingTransactionList {
