@@ -11,12 +11,23 @@ service ApplicationMonitoring {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc InitializeApplication (ApplicationInfo) returns (InitializeApplicationResponse);
   rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
-  rpc GetApplicationById(GetApplicationByIdRequest) returns (Application);
+  rpc GetApplicationById (ApplicationByIdReuqest) returns (Application);
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetApplicationList(google.protobuf.Empty) returns (GetApplicationListResponse);
+  rpc GetApplicationList (google.protobuf.Empty) returns (GetApplicationListResponse);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc ArchiveApplicationById (ApplicationByIdReuqest) returns (Application);
+  rpc EnableApplicationById (ApplicationByIdReuqest) returns (Application);
+  rpc DisableApplicationById (ApplicationByIdReuqest) returns (Application);
 }
 
-message GetApplicationByIdRequest {
+enum ApplicationStatus {
+  APPLICATION_STATUS_UNSPECIFIED = 0;
+  APPLICATION_STATUS_ENABLED = 1;
+  APPLICATION_STATUS_DISABLED = 2;
+  APPLICATION_STATUS_ARCHIVED = 3;
+}
+
+message ApplicationByIdReuqest {
   string application_id = 1;
 }
 
@@ -30,6 +41,9 @@ message Application {
   string name = 2;
   // host name
   string host_name = 3;
+  // Is application can recieved transactions
+
+  ApplicationStatus status = 4;
 }
 
 message ApplicationInfo {

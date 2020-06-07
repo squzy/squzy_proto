@@ -139,11 +139,10 @@ enum SchedulerCode {
 
 message GetTransactionGroupRequest {
   string application_id = 1;
-  Pagination pagination = 2; // if nil means all record
-  TimeFilter time_range = 3; // nil not set (filter by start time)
-  GroupTransaction group_type  = 4; // how we will group transactions
-  squzy.v1.monitoring.TransactionType type = 5;
-  squzy.v1.monitoring.TransactionStatus status = 6;
+  TimeFilter time_range = 2; // nil not set (filter by start time)
+  GroupTransaction group_type  = 3; // how we will group transactions
+  squzy.v1.monitoring.TransactionType type = 4;
+  squzy.v1.monitoring.TransactionStatus status = 5;
 }
 
 message TransactionGroup {
