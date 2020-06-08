@@ -153,4 +153,5 @@ message PlatformInfo {
 
 message RegisterResponse {
   string id = 1;
+  string env_name = 2;
 }

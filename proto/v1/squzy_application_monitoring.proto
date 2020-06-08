@@ -18,6 +18,12 @@ service ApplicationMonitoring {
   rpc ArchiveApplicationById (ApplicationByIdReuqest) returns (Application);
   rpc EnableApplicationById (ApplicationByIdReuqest) returns (Application);
   rpc DisableApplicationById (ApplicationByIdReuqest) returns (Application);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetApplicationListByAgentId (AgentIdRequest) returns (GetApplicationListResponse);
+}
+
+message AgentIdRequest {
+  string agent_id = 1;
 }
 
 enum ApplicationStatus {
@@ -51,6 +57,8 @@ message ApplicationInfo {
   string name = 1;
   // host name
   string host_name = 2;
+  // agent id on host
+  string agent_id = 3;
 }
 
 message InitializeApplicationResponse {
