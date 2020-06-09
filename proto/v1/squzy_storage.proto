@@ -148,6 +148,10 @@ message GetTransactionGroupRequest {
 message TransactionGroup {
   int64 count = 1;
   double average_time = 2;
+  double success_ratio = 3;
+  double min_time = 4;
+  double max_time = 5;
+  double throughput = 6;
 }
 
 message GetTransactionGroupResponse {
