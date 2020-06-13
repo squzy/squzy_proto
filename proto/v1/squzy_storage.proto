@@ -98,6 +98,8 @@ message SortingTransactionList {
 enum SortTransactionList {
   SORT_TRANSACTION_LIST_UNSPECIFIED = 0;
   DURATION = 1;
+  BY_START_TIME = 2;
+  BY_END_TIME = 3;
 }
 
 enum SortDirection {
