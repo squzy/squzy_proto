@@ -127,6 +127,8 @@ message RegisterRequest {
   string agent_name = 1;
   HostInfo host_info = 2;
   google.protobuf.Timestamp time = 3;
+  // interval for update
+  int64 interval = 4;
 }
 
 message AgentItem {
@@ -134,6 +136,7 @@ message AgentItem {
   string agent_name = 2;
   AgentStatus status = 3;
   HostInfo host_info = 4;
+  int64 interval = 5;
 }
 
 message HostInfo {
@@ -150,4 +153,5 @@ message PlatformInfo {
 
 message RegisterResponse {
   string id = 1;
+  string env_name = 2;
 }

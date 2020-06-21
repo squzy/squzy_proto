@@ -5,7 +5,9 @@ package squzy.v1.storage;
 import "google/protobuf/empty.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 import "proto/v1/squzy_agent_server.proto";
+import "proto/v1/squzy_application_monitoring.proto";
 import "proto/v1/squzy_monitoring.proto";
 
 option go_package = "api";
@@ -13,16 +15,113 @@ option go_package = "api";
 service Storage {
   //To save info about checkers
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc SendResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
+  rpc SaveResponseFromScheduler (SchedulerResponse) returns (google.protobuf.Empty);
   //To save info about agent
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc SendResponseFromAgent (squzy.v1.agent.Metric) returns (google.protobuf.Empty);
-  //To send info about checkers
+  rpc SaveResponseFromAgent (squzy.v1.agent.Metric) returns (google.protobuf.Empty);
+  // Save information from application monitoring
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc SaveTransaction(squzy.v1.monitoring.TransactionInfo) returns (google.protobuf.Empty);
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetSchedulerInformation (GetSchedulerInformationRequest) returns (GetSchedulerInformationResponse);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetSchedulerUptime (GetSchedulerUptimeRequest) returns (GetSchedulerUptimeResponse);
   //To send info about about agent
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetAgentInformation (GetAgentInformationRequest) returns (GetAgentInformationResponse);
+  // Return grouped transactions via group
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetTransactionsGroup (GetTransactionGroupRequest) returns (GetTransactionGroupResponse);
+  // Returns list of transaction via filter
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetTransactionById (GetTransactionByIdRequest) returns (GetTransactionByIdResponse);
+}
+
+message GetSchedulerUptimeRequest {
+  string scheduler_id = 1;
+  TimeFilter time_range = 2;
+}
+
+message GetSchedulerUptimeResponse {
+  double uptime = 1;
+  double latency = 2;
+}
+
+message GetTransactionByIdResponse {
+  squzy.v1.monitoring.TransactionInfo transaction = 1;
+  repeated squzy.v1.monitoring.TransactionInfo children = 2;
+}
+
+message GetTransactionByNameRequest {
+  string application_id = 1;
+  string transaction_name = 2;
+  Pagination pagination = 3;
+  TimeFilter time_range = 4;
+}
+
+message GetTransactionByNameResponse {
+  int64 count = 1;
+  repeated squzy.v1.monitoring.TransactionInfo transactions = 2;
+}
+
+message GetTransactionByIdRequest {
+  string transaction_id = 1;
+}
+
+message GetTransactionsResponse {
+  int64 count = 1;
+  repeated squzy.v1.monitoring.TransactionInfo transactions = 2;
+}
+
+message GetTransactionsRequest {
+  string application_id = 1; // if empty then ignore
+  Pagination pagination = 2;
+  TimeFilter time_range = 3;
+  squzy.v1.monitoring.TransactionType type = 4;
+  squzy.v1.monitoring.TransactionStatus status = 5;
+  // filter is not exists
+  google.protobuf.StringValue host = 6;
+  google.protobuf.StringValue name = 7;
+  google.protobuf.StringValue path = 8;
+  google.protobuf.StringValue method = 9;
+
+  SortingTransactionList sort = 10;
+}
+
+message SortingTransactionList {
+  SortTransactionList sort_by = 1;
+  SortDirection direction = 2;
+}
+
+enum SortTransactionList {
+  SORT_TRANSACTION_LIST_UNSPECIFIED = 0;
+  DURATION = 1;
+  BY_TRANSACTION_START_TIME = 2;
+  BY_TRANSACTION_END_TIME = 3;
+}
+
+enum SortDirection {
+  SORT_DIRECTION_UNSPECIFIED = 0;
+  ASC = 1;
+  DESC = 2;
+}
+
+enum SortSchedulerList {
+  SORT_SCHEDULER_LIST_UNSPECIFIED = 0;
+  BY_START_TIME = 1;
+  BY_END_TIME = 2;
+  BY_LATENCY  = 3;
+}
+
+enum GroupTransaction {
+  GROUP_TRANSACTION_UNSPECIFIED = 0;
+  BY_TYPE = 1;
+  BY_NAME = 2;
+  BY_METHOD = 3;
+  BY_HOST = 4;
+  BY_PATH = 5;
 }
 
 enum TypeAgentStat {
@@ -38,6 +137,27 @@ enum SchedulerCode {
   SCHEDULER_CODE_UNSPECIFIED = 0;
   OK = 1;
   ERROR = 2;
+}
+
+message GetTransactionGroupRequest {
+  string application_id = 1;
+  TimeFilter time_range = 2; // nil not set (filter by start time)
+  GroupTransaction group_type  = 3; // how we will group transactions
+  squzy.v1.monitoring.TransactionType type = 4;
+  squzy.v1.monitoring.TransactionStatus status = 5;
+}
+
+message TransactionGroup {
+  int64 count = 1;
+  double average_time = 2;
+  double success_ratio = 3;
+  double min_time = 4;
+  double max_time = 5;
+  double throughput = 6;
+}
+
+message GetTransactionGroupResponse {
+  map<string,TransactionGroup> transactions = 1;
 }
 
 message SchedulerResponse {
@@ -70,10 +190,17 @@ message Pagination {
   int32 limit = 2; // default 20
 }
 
+message SortingSchedulerList {
+  SortSchedulerList sort_by = 1;
+  SortDirection direction = 2;
+}
+
 message GetSchedulerInformationRequest {
   string scheduler_id = 1;
   Pagination pagination = 2; // if nil means all record
   TimeFilter time_range = 3; // nil not set (filter by start time)
+  SortingSchedulerList sort = 4; // sort for table
+  SchedulerCode status = 5; // filter for table
 }
 
 message GetSchedulerInformationResponse {

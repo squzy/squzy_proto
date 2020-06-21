@@ -1,0 +1,110 @@
+syntax = 'proto3';
+
+package squzy.v1.monitoring;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "api";
+
+service ApplicationMonitoring {
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc InitializeApplication (ApplicationInfo) returns (InitializeApplicationResponse);
+  rpc SaveTransaction (TransactionInfo) returns (google.protobuf.Empty);
+  rpc GetApplicationById (ApplicationByIdReuqest) returns (Application);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetApplicationList (google.protobuf.Empty) returns (GetApplicationListResponse);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc ArchiveApplicationById (ApplicationByIdReuqest) returns (Application);
+  rpc EnableApplicationById (ApplicationByIdReuqest) returns (Application);
+  rpc DisableApplicationById (ApplicationByIdReuqest) returns (Application);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetApplicationListByAgentId (AgentIdRequest) returns (GetApplicationListResponse);
+}
+
+message AgentIdRequest {
+  string agent_id = 1;
+}
+
+enum ApplicationStatus {
+  APPLICATION_STATUS_UNSPECIFIED = 0;
+  APPLICATION_STATUS_ENABLED = 1;
+  APPLICATION_STATUS_DISABLED = 2;
+  APPLICATION_STATUS_ARCHIVED = 3;
+}
+
+message ApplicationByIdReuqest {
+  string application_id = 1;
+}
+
+message GetApplicationListResponse {
+  repeated Application applications = 1;
+}
+
+message Application {
+  string id = 1;
+  // Uniq name provided from developer
+  string name = 2;
+  // host name
+  string host_name = 3;
+  // Is application can recieved transactions
+
+  ApplicationStatus status = 4;
+}
+
+message ApplicationInfo {
+  // Uniq name provided from developer
+  string name = 1;
+  // host name
+  string host_name = 2;
+  // agent id on host
+  string agent_id = 3;
+}
+
+message InitializeApplicationResponse {
+  string application_id = 1;
+  string tracing_header = 2;
+}
+
+enum TransactionStatus {
+  TRANSACTION_CODE_UNSPECIFIED = 0;
+  TRANSACTION_SUCCESSFUL = 1;
+  TRANSACTION_FAILED = 2;
+}
+
+enum TransactionType {
+  TRANSACTION_TYPE_UNSPECIFIED = 0;
+  TRANSACTION_TYPE_XHR = 1;
+  TRANSACTION_TYPE_FETCH = 2;
+  TRANSACTION_TYPE_WEBSOCKET = 3;
+  TRANSACTION_TYPE_HTTP = 4;
+  TRANSACTION_TYPE_GRPC = 5;
+  TRANSACTION_TYPE_DB = 6;
+  TRANSACTION_TYPE_INTERNAL = 7;
+  TRANSACTION_TYPE_ROUTER = 8;
+}
+
+message TransactionInfo {
+  string id = 1;
+  // Application id from init request
+  string application_id = 2;
+  // Parent transaction id, if "" - then first transaction
+  string parent_id = 3;
+  // Meta about request
+  Meta meta = 4;
+  // Name of transactions (should be uniq per application)
+  string name = 5;
+  google.protobuf.Timestamp start_time = 6;
+  google.protobuf.Timestamp end_time = 7;
+  TransactionStatus status = 8;
+  TransactionType type = 9;
+  Error error = 10;
+  message Error {
+    string message = 1;
+  }
+  message Meta {
+    string host = 1;
+    string path = 2;
+    string method = 3;
+  }
+}
