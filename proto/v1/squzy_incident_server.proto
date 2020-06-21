@@ -1,0 +1,61 @@
+syntax = 'proto3';
+
+package squzy.v1.incident;
+
+import "google/protobuf/empty.proto";
+import "proto/v1/squzy_agent_server.proto";
+import "proto/v1/squzy_application_monitoring.proto";
+import "proto/v1/squzy_storage.proto";
+
+service IncidentServer {
+  rpc CreateRule(CreateRuleRequest) returns (Rule);
+  rpc GetRuleById(RuleIdRequest) returns (Rule);
+  rpc GetRulesByOwnerId(GetRulesByOwnerIdRequest) returns (Rules);
+  rpc RemoveRule(RuleIdRequest) returns (Rule);
+  rpc SaveRecordFromStorage(StorageRecord) returns (google.protobuf.Empty);
+}
+
+message StorageRecord {
+  oneof record {
+    squzy.v1.agent.Metric agent = 1;
+    squzy.v1.monitoring.TransactionInfo transaction = 2;
+    squzy.v1.storage.SchedulerSnapshot scheduler_snapshot = 3;
+  }
+}
+
+message RuleIdRequest {
+  string rule_id = 1;
+}
+
+message CreateRuleRequest {
+  string rule = 1;
+  string name = 2;
+  oneof owner {
+    string scheduler_id = 3;
+    string agent_id = 4;
+    string application_id =  5;
+  }
+}
+
+message GetRulesByOwnerIdRequest {
+  oneof owner {
+    string scheduler_id = 1;
+    string agent_id = 2;
+    string application_id =  3;
+  }
+}
+
+message Rule {
+  string id = 1;
+  string rule = 2;
+  string name = 3;
+  oneof parent {
+    string scheduler_id = 4;
+    string agent_id = 5;
+    string application_id =  6;
+  }
+}
+
+message Rules  {
+  repeated Rule rules = 1;
+}
