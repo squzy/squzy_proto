@@ -6,7 +6,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "proto/v1/squzy_agent_server.proto";
 import "proto/v1/squzy_application_monitoring.proto";
-import "proto/v1/squzy_storage.proto";
+import "proto/v1/squzy_monitoring.proto";
 
 service IncidentServer {
   rpc CreateRule(CreateRuleRequest) returns (Rule);
@@ -45,7 +45,7 @@ message StorageRecord {
   oneof record {
     squzy.v1.agent.Metric agent = 1;
     squzy.v1.monitoring.TransactionInfo transaction = 2;
-    squzy.v1.storage.SchedulerSnapshot scheduler_snapshot = 3;
+    squzy.v1.monitoring.SchedulerSnapshot scheduler_snapshot = 3;
   }
 }
 
