@@ -26,7 +26,7 @@ enum IncidentStatus {
   INCIDENT_STATUS_CLOSED = 5;
 }
 
-enum IncidentOwnerType {
+enum RuleOwnerType {
   INCIDENT_OWNER_TYPE_UNSPECIFIED = 0;
   INCIDENT_OWNER_TYPE_SCHEDULER = 1;
   INCIDENT_OWNER_TYPE_AGENT = 2;
@@ -64,12 +64,12 @@ message CreateRuleRequest {
   string rule = 1;
   string name = 2;
   bool auto_close = 3;
-  IncidentOwnerType owner_type = 4;
+  RuleOwnerType owner_type = 4;
   string owner_id = 5;
 }
 
 message GetRulesByOwnerIdRequest {
-  IncidentOwnerType owner_type = 1;
+  RuleOwnerType owner_type = 1;
   string owner_id = 2;
 }
 
@@ -78,7 +78,7 @@ message Rule {
   string rule = 2;
   string name = 3;
   bool auto_close = 4;
-  IncidentOwnerType owner_type = 5;
+  RuleOwnerType owner_type = 5;
   string owner_id = 6;
 }
 
