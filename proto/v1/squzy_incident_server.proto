@@ -15,6 +15,8 @@ service IncidentServer {
   rpc RemoveRule(RuleIdRequest) returns (Rule);
   rpc ProcessRecordFromStorage(StorageRecord) returns (google.protobuf.Empty);
   rpc CloseIncident(IncidentIdRequest) returns (Incident);
+  rpc ActivateRule(RuleIdRequest) returns (Rule);
+  rpc DeactivateRule(RuleIdRequest) returns (Rule);
   rpc StudyIncident(IncidentIdRequest) returns (Incident);
 }
 
@@ -24,6 +26,13 @@ enum IncidentStatus {
   INCIDENT_STATUS_STUDIED = 2;
   INCIDENT_STATUS_CAN_BE_CLOSED = 4;
   INCIDENT_STATUS_CLOSED = 5;
+}
+
+enum RuleStatus {
+  RULE_STATUS_UNSPECIFIED = 0;
+  RULE_STATUS_ACTIVE = 1;
+  RULE_STATUS_INACTIVE = 2;
+  RULE_STATUS_REMOVED = 3;
 }
 
 enum RuleOwnerType {
@@ -81,6 +90,7 @@ message Rule {
   bool auto_close = 4;
   RuleOwnerType owner_type = 5;
   string owner_id = 6;
+  RuleStatus status = 7;
 }
 
 message Rules  {
