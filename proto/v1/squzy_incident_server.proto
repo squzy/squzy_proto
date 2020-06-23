@@ -4,16 +4,13 @@ package squzy.v1.incident;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "proto/v1/squzy_agent_server.proto";
-import "proto/v1/squzy_application_monitoring.proto";
-import "proto/v1/squzy_monitoring.proto";
 
 service IncidentServer {
   rpc CreateRule(CreateRuleRequest) returns (Rule);
   rpc GetRuleById(RuleIdRequest) returns (Rule);
   rpc GetRulesByOwnerId(GetRulesByOwnerIdRequest) returns (Rules);
   rpc RemoveRule(RuleIdRequest) returns (Rule);
-  rpc ProcessRecordFromStorage(StorageRecord) returns (google.protobuf.Empty);
+  rpc AnalyseEntity(EntityInfo) returns (google.protobuf.Empty);
   rpc CloseIncident(IncidentIdRequest) returns (Incident);
   rpc StudyIncident(IncidentIdRequest) returns (Incident);
 }
@@ -48,12 +45,9 @@ message IncidentIdRequest {
   string incident_id = 1;
 }
 
-message StorageRecord {
-  oneof record {
-    squzy.v1.agent.Metric agent = 1;
-    squzy.v1.monitoring.TransactionInfo transaction = 2;
-    squzy.v1.monitoring.SchedulerSnapshot scheduler_snapshot = 3;
-  }
+message EntityInfo {
+  RuleOwnerType owner_type = 5;
+  string owner_id = 6;
 }
 
 message RuleIdRequest {
