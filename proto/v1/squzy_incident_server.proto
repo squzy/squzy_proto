@@ -13,7 +13,7 @@ service IncidentServer {
   rpc GetRuleById(RuleIdRequest) returns (Rule);
   rpc GetRulesByOwnerId(GetRulesByOwnerIdRequest) returns (Rules);
   rpc RemoveRule(RuleIdRequest) returns (Rule);
-  rpc ValidateRule(ValidateRuleRequest) returns (google.protobuf.Empty);
+  rpc ValidateRule(ValidateRuleRequest) returns (ValidateRuleResponse);
   rpc ProcessRecordFromStorage(StorageRecord) returns (google.protobuf.Empty);
   rpc CloseIncident(IncidentIdRequest) returns (Incident);
   rpc ActivateRule(RuleIdRequest) returns (Rule);
@@ -46,6 +46,14 @@ enum RuleOwnerType {
 message ValidateRuleRequest {
   RuleOwnerType owner_type = 1;
   string rule = 2;
+}
+
+message ValidateRuleResponse {
+  bool is_valid = 1;
+  Error error = 2;
+  message Error {
+    string message = 1;
+  }
 }
 
 message Incident {
