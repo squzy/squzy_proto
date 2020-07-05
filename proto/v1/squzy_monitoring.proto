@@ -26,6 +26,11 @@ enum SchedulerCode {
   ERROR = 2;
 }
 
+message SchedulerSnapshotWithId {
+  SchedulerSnapshot snapshot = 1;
+  string id = 2;
+}
+
 message SchedulerSnapshot {
   message Error {
     string message = 1;

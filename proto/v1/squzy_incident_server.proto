@@ -74,9 +74,9 @@ message IncidentIdRequest {
 
 message StorageRecord {
   oneof record {
-    squzy.v1.agent.Metric agent = 1;
+    squzy.v1.agent.Metric agent_metric = 1;
     squzy.v1.monitoring.TransactionInfo transaction = 2;
-    squzy.v1.monitoring.Scheduler scheduler = 3;
+    squzy.v1.monitoring.SchedulerSnapshotWithId snapshot = 3;
   }
 }
 
