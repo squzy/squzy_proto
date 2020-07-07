@@ -3,11 +3,11 @@ syntax = 'proto3';
 package squzy.v1.storage;
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "proto/v1/squzy_agent_server.proto";
 import "proto/v1/squzy_application_monitoring.proto";
+import "proto/v1/squzy_incident_server.proto";
 import "proto/v1/squzy_monitoring.proto";
 
 option go_package = "api";
@@ -37,6 +37,49 @@ service Storage {
   rpc GetTransactions (GetTransactionsRequest) returns (GetTransactionsResponse);
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetTransactionById (GetTransactionByIdRequest) returns (GetTransactionByIdResponse);
+  // Save incident from incident service
+  rpc SaveIncident (squzy.v1.incident.Incident) returns (google.protobuf.Empty);
+  // Update incident status from incident service
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc UpdateIncidentStatus (UpdateIncidentStatusRequest) returns (squzy.v1.incident.Incident);
+  // Get incident by ID
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetIncidentById (squzy.v1.incident.IncidentIdRequest) returns (squzy.v1.incident.Incident);
+  // Get incident by rule id, should be just one active incident per rule
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetIncidentByRuleId (squzy.v1.incident.RuleIdRequest) returns (squzy.v1.incident.Incident);
+  // Get list with filters
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetIncidentsList (GetIncidentsListRequest) returns (GetIncidentsListResponse);
+}
+
+message UpdateIncidentStatusRequest {
+  string incident_id = 1;
+  squzy.v1.incident.IncidentStatus status = 2;
+}
+
+enum SortIncidentList {
+  SORT_INCIDENT_LIST_UNSPECIFIED = 0;
+  INCIDENT_LIST_BY_START_TIME = 1;
+  INCIDENT_LIST_BY_END_TIME = 2;
+}
+
+message SortingIncidentList {
+  SortIncidentList sort_by = 1;
+  SortDirection direction = 2;
+}
+
+message GetIncidentsListRequest {
+  squzy.v1.incident.IncidentStatus status = 1;
+  google.protobuf.StringValue rule_id = 2;
+  Pagination pagination = 3;
+  TimeFilter time_range = 4;
+  SortingIncidentList sort = 5;
+}
+
+message GetIncidentsListResponse {
+  int64 count = 1;
+  repeated squzy.v1.incident.Incident incidents = 2;
 }
 
 message GetSchedulerUptimeRequest {
@@ -133,12 +176,6 @@ enum TypeAgentStat {
   NET = 5;
 }
 
-enum SchedulerCode {
-  SCHEDULER_CODE_UNSPECIFIED = 0;
-  OK = 1;
-  ERROR = 2;
-}
-
 message GetTransactionGroupRequest {
   string application_id = 1;
   TimeFilter time_range = 2; // nil not set (filter by start time)
@@ -162,22 +199,7 @@ message GetTransactionGroupResponse {
 
 message SchedulerResponse {
   string scheduler_id = 1;
-  SchedulerSnapshot snapshot = 2;
-}
-
-message SchedulerSnapshot {
-  message Error {
-    string message = 1;
-  }
-  message MetaData {
-    google.protobuf.Timestamp start_time = 1;
-    google.protobuf.Timestamp end_time = 2;
-    google.protobuf.Value value = 3;
-  }
-  SchedulerCode code = 2;
-  squzy.v1.monitoring.SchedulerType type = 3;
-  Error error = 4;
-  MetaData meta = 5;
+  squzy.v1.monitoring.SchedulerSnapshot snapshot = 2;
 }
 
 message TimeFilter {
@@ -200,11 +222,11 @@ message GetSchedulerInformationRequest {
   Pagination pagination = 2; // if nil means all record
   TimeFilter time_range = 3; // nil not set (filter by start time)
   SortingSchedulerList sort = 4; // sort for table
-  SchedulerCode status = 5; // filter for table
+  squzy.v1.monitoring.SchedulerCode status = 5; // filter for table
 }
 
 message GetSchedulerInformationResponse {
-  repeated SchedulerSnapshot snapshots = 1;
+  repeated squzy.v1.monitoring.SchedulerSnapshot snapshots = 1;
   int32 count = 2;
 }
 

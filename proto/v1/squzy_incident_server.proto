@@ -1,0 +1,112 @@
+syntax = 'proto3';
+
+package squzy.v1.incident;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "proto/v1/squzy_agent_server.proto";
+import "proto/v1/squzy_application_monitoring.proto";
+import "proto/v1/squzy_monitoring.proto";
+
+service IncidentServer {
+  rpc CreateRule(CreateRuleRequest) returns (Rule);
+  rpc GetRuleById(RuleIdRequest) returns (Rule);
+  rpc GetRulesByOwnerId(GetRulesByOwnerIdRequest) returns (Rules);
+  rpc RemoveRule(RuleIdRequest) returns (Rule);
+  rpc ValidateRule(ValidateRuleRequest) returns (ValidateRuleResponse);
+  rpc ProcessRecordFromStorage(StorageRecord) returns (google.protobuf.Empty);
+  rpc CloseIncident(IncidentIdRequest) returns (Incident);
+  rpc ActivateRule(RuleIdRequest) returns (Rule);
+  rpc DeactivateRule(RuleIdRequest) returns (Rule);
+  rpc StudyIncident(IncidentIdRequest) returns (Incident);
+}
+
+enum IncidentStatus {
+  INCIDENT_STATUS_UNSPECIFIED = 0;
+  INCIDENT_STATUS_OPENED = 1;
+  INCIDENT_STATUS_STUDIED = 2;
+  INCIDENT_STATUS_CAN_BE_CLOSED = 3;
+  INCIDENT_STATUS_CLOSED = 4;
+}
+
+enum RuleStatus {
+  RULE_STATUS_UNSPECIFIED = 0;
+  RULE_STATUS_ACTIVE = 1;
+  RULE_STATUS_INACTIVE = 2;
+  RULE_STATUS_REMOVED = 3;
+}
+
+enum RuleOwnerType {
+  INCIDENT_OWNER_TYPE_UNSPECIFIED = 0;
+  INCIDENT_OWNER_TYPE_SCHEDULER = 1;
+  INCIDENT_OWNER_TYPE_AGENT = 2;
+  INCIDENT_OWNER_TYPE_APPLICATION = 3;
+}
+
+message ValidateRuleRequest {
+  RuleOwnerType owner_type = 1;
+  string rule = 2;
+}
+
+message ValidateRuleResponse {
+  bool is_valid = 1;
+  Error error = 2;
+  message Error {
+    string message = 1;
+  }
+}
+
+message Incident {
+  string id = 1;
+  IncidentStatus status = 2;
+  string rule_id = 3;
+  message HistoryItem  {
+    IncidentStatus status = 1;
+    google.protobuf.Timestamp timestamp = 2;
+  }
+  repeated HistoryItem histories = 4;
+}
+
+message IncidentIdRequest {
+  string incident_id = 1;
+}
+
+
+message StorageRecord {
+  oneof record {
+    squzy.v1.agent.Metric agent_metric = 1;
+    squzy.v1.monitoring.TransactionInfo transaction = 2;
+    squzy.v1.monitoring.SchedulerSnapshotWithId snapshot = 3;
+  }
+}
+
+message RuleIdRequest {
+  string rule_id = 1;
+}
+
+message CreateRuleRequest {
+  string rule = 1;
+  string name = 2;
+  bool auto_close = 3;
+  RuleOwnerType owner_type = 4;
+  string owner_id = 5;
+}
+
+message GetRulesByOwnerIdRequest {
+  RuleOwnerType owner_type = 1;
+  string owner_id = 2;
+}
+
+message Rule {
+  string id = 1;
+  string rule = 2;
+  string name = 3;
+  bool auto_close = 4;
+  RuleOwnerType owner_type = 5;
+  string owner_id = 6;
+  RuleStatus status = 7;
+}
+
+message Rules  {
+  repeated Rule rules = 1;
+}
