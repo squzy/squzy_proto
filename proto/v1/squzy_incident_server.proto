@@ -4,6 +4,7 @@ package squzy.v1.incident;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "proto/v1/shared.proto";
 import "proto/v1/squzy_agent_server.proto";
 import "proto/v1/squzy_application_monitoring.proto";
 import "proto/v1/squzy_monitoring.proto";
@@ -36,15 +37,8 @@ enum RuleStatus {
   RULE_STATUS_REMOVED = 3;
 }
 
-enum RuleOwnerType {
-  INCIDENT_OWNER_TYPE_UNSPECIFIED = 0;
-  INCIDENT_OWNER_TYPE_SCHEDULER = 1;
-  INCIDENT_OWNER_TYPE_AGENT = 2;
-  INCIDENT_OWNER_TYPE_APPLICATION = 3;
-}
-
 message ValidateRuleRequest {
-  RuleOwnerType owner_type = 1;
+  squzy.v1.shared.ComponentOwnerType owner_type = 1;
   string rule = 2;
 }
 
@@ -88,12 +82,13 @@ message CreateRuleRequest {
   string rule = 1;
   string name = 2;
   bool auto_close = 3;
-  RuleOwnerType owner_type = 4;
+  squzy.v1.shared.ComponentOwnerType owner_type = 4;
   string owner_id = 5;
+  bool notification = 6;
 }
 
 message GetRulesByOwnerIdRequest {
-  RuleOwnerType owner_type = 1;
+  squzy.v1.shared.ComponentOwnerType owner_type = 1;
   string owner_id = 2;
 }
 
@@ -102,9 +97,10 @@ message Rule {
   string rule = 2;
   string name = 3;
   bool auto_close = 4;
-  RuleOwnerType owner_type = 5;
+  squzy.v1.shared.ComponentOwnerType owner_type = 5;
   string owner_id = 6;
   RuleStatus status = 7;
+  bool notification = 8;
 }
 
 message Rules  {
