@@ -2,6 +2,7 @@ syntax = 'proto3';
 
 package squzy.v1.notification;
 
+import "google/protobuf/empty.proto";
 import "proto/v1/shared.proto";
 
 option go_package = "api";
@@ -16,6 +17,7 @@ service NotificationManager {
   rpc Add(NotificationMethodRequest) returns (NotificationMethod);
   rpc Remove(NotificationMethodRequest) returns (NotificationMethod);
   rpc GetList(GetListRequest) returns (GetListResponse);
+  rpc Notify(NotifyRequest) returns (google.protobuf.Empty);
 }
 
 enum NotificationMethodType {
@@ -29,6 +31,12 @@ enum NotificationMethodStatus {
   NOTIFICATION_STATUS_ACTIVE = 1;
   NOTIFICATION_STATUS_INACTIVE = 2;
   NOTIFICATION_STATUS_REMOVED = 3;
+}
+
+message NotifyRequest {
+  string incident_id = 1;
+  squzy.v1.shared.ComponentOwnerType owner_type = 2;
+  string owner_id = 3;
 }
 
 message WebHookMethod {
