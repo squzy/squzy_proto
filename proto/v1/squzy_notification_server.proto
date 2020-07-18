@@ -11,6 +11,7 @@ service NotificationManager {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc CreateNotificationMethod(CreateNotificationMethodRequest) returns (NotificationMethod);
   rpc GetById(NotificationMethodIdRequest) returns (NotificationMethod);
+  rpc GetNotificationMethods(google.protobuf.Empty) returns (GetListResponse);
   rpc DeleteById(NotificationMethodIdRequest) returns (NotificationMethod);
   rpc Activate(NotificationMethodIdRequest) returns (NotificationMethod);
   rpc Deactivate(NotificationMethodIdRequest) returns (NotificationMethod);
