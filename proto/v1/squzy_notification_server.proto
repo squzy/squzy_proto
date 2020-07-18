@@ -60,11 +60,12 @@ message GetListRequest {
 
 message NotificationMethod {
   string id = 1;
-  NotificationMethodStatus status = 2;
-  NotificationMethodType type = 3;
+  string name = 2;
+  NotificationMethodStatus status = 3;
+  NotificationMethodType type = 4;
   oneof method {
-    SlackMethod slack = 4;
-    WebHookMethod webhook = 5;
+    SlackMethod slack = 5;
+    WebHookMethod webhook = 6;
   }
 }
 
@@ -74,9 +75,10 @@ message NotificationMethodIdRequest {
 
 message CreateNotificationMethodRequest {
   NotificationMethodType type = 1;
+  string name = 2;
   oneof method {
-    SlackMethod slack = 2;
-    WebHookMethod webhook = 3   ;
+    SlackMethod slack = 3;
+    WebHookMethod webhook = 4;
   }
 }
 
