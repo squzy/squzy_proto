@@ -1,0 +1,88 @@
+syntax = 'proto3';
+
+package squzy.v1.notification;
+
+import "google/protobuf/empty.proto";
+import "proto/v1/shared.proto";
+
+option go_package = "api";
+
+service NotificationManager {
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc CreateNotificationMethod(CreateNotificationMethodRequest) returns (NotificationMethod);
+  rpc GetById(NotificationMethodIdRequest) returns (NotificationMethod);
+  rpc GetNotificationMethods(google.protobuf.Empty) returns (GetListResponse);
+  rpc DeleteById(NotificationMethodIdRequest) returns (NotificationMethod);
+  rpc Activate(NotificationMethodIdRequest) returns (NotificationMethod);
+  rpc Deactivate(NotificationMethodIdRequest) returns (NotificationMethod);
+  rpc Add(NotificationMethodRequest) returns (NotificationMethod);
+  rpc Remove(NotificationMethodRequest) returns (NotificationMethod);
+  rpc GetList(GetListRequest) returns (GetListResponse);
+  rpc Notify(NotifyRequest) returns (google.protobuf.Empty);
+}
+
+enum NotificationMethodType {
+  NOTIFICATION_METHOD_UNSPECIFIED = 0;
+  NOTIFICATION_METHOD_WEBHOOK = 1;
+  NOTIFICATION_METHOD_SLACK = 2;
+}
+
+enum NotificationMethodStatus {
+  NOTIFICATION_STATUS_UNSPECIFIED = 0;
+  NOTIFICATION_STATUS_ACTIVE = 1;
+  NOTIFICATION_STATUS_INACTIVE = 2;
+  NOTIFICATION_STATUS_REMOVED = 3;
+}
+
+message NotifyRequest {
+  string incident_id = 1;
+  squzy.v1.shared.ComponentOwnerType owner_type = 2;
+  string owner_id = 3;
+}
+
+message WebHookMethod {
+  string url = 1;
+}
+
+message SlackMethod {
+  string url = 1;
+}
+
+message NotificationMethodRequest {
+  squzy.v1.shared.ComponentOwnerType owner_type = 1;
+  string owner_id = 2;
+  string notification_method_id = 3;
+}
+
+message GetListRequest {
+  squzy.v1.shared.ComponentOwnerType owner_type = 1;
+  string owner_id = 2;
+}
+
+message NotificationMethod {
+  string id = 1;
+  string name = 2;
+  NotificationMethodStatus status = 3;
+  NotificationMethodType type = 4;
+  oneof method {
+    SlackMethod slack = 5;
+    WebHookMethod webhook = 6;
+  }
+}
+
+message NotificationMethodIdRequest {
+  string id = 1;
+}
+
+message CreateNotificationMethodRequest {
+  NotificationMethodType type = 1;
+  string name = 2;
+  oneof method {
+    SlackMethod slack = 3;
+    WebHookMethod webhook = 4;
+  }
+}
+
+message GetListResponse {
+  repeated NotificationMethod methods = 1;
+}

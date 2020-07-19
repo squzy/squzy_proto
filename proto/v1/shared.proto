@@ -1,0 +1,12 @@
+syntax = 'proto3';
+
+package squzy.v1.shared;
+
+option go_package = "api";
+
+enum ComponentOwnerType {
+  COMPONENT_OWNER_TYPE_UNSPECIFIED = 0;
+  COMPONENT_OWNER_TYPE_SCHEDULER = 1;
+  COMPONENT_OWNER_TYPE_AGENT = 2;
+  COMPONENT_OWNER_TYPE_APPLICATION = 3;
+}
