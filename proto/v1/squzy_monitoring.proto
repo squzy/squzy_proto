@@ -156,6 +156,7 @@ message AddRequest {
     GrpcConfig grpc = 6;
     HttpConfig http = 7;
     HttpJsonValueConfig http_value = 8;
+    SslExpirationConfig ssl_expiration = 9;
   }
 }
 
