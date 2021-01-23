@@ -107,6 +107,7 @@ message TcpConfig {
 
 message SslExpirationConfig {
   string host = 1;
+  int32 port = 3;
 }
 
 message GrpcConfig {
