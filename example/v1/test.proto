@@ -1,0 +1,16 @@
+syntax = 'proto3';
+
+package squzy.v1.test;
+
+import "google/protobuf/empty.proto";
+
+service AgentServer {
+  rpc Register (google.protobuf.Empty) returns (google.protobuf.Empty);
+}
+
+enum ComponentOwnerType {
+  COMPONENT_OWNER_TYPE_UNSPECIFIED = 0;
+  COMPONENT_OWNER_TYPE_SCHEDULER = 1;
+  COMPONENT_OWNER_TYPE_AGENT = 2;
+  COMPONENT_OWNER_TYPE_APPLICATION = 3;
+}
