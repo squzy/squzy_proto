@@ -16,3 +16,8 @@ jobs:
         uses: plexsystems/protolint-action@v0.2.0
         with:
           configDirectory: .
+
+      - name: Genereate code for squzy-storage protofile
+        uses: PxyUp/protoc-actions@v2.0.10
+        with:
+          path: -I./proto --go_out=plugins=grpc,request_context=true:./generated proto/v1/squzy_storage.proto
