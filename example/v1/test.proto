@@ -4,6 +4,8 @@ package squzy.v1.test;
 
 import "google/protobuf/empty.proto";
 
+option go_package = "/;proto";
+
 service AgentServer {
   rpc Register (google.protobuf.Empty) returns (google.protobuf.Empty);
 }
