@@ -18,6 +18,6 @@ jobs:
           configDirectory: .
 
       - name: Genereate code for squzy-storage protofile
-        uses: PxyUp/protoc-actions@v2.0.9
+        uses: PxyUp/protoc-actions@v2.0.10
         with:
           path: -I. --go_out=plugins=grpc,request_context=true:./generated proto/v1/squzy_storage.proto
