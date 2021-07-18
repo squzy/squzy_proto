@@ -22,4 +22,5 @@ jobs:
         with:
           path: -I./ --go_opt=paths=source_relative --go_out=./generated example/v1/test.proto
 
-      - run: ls generated
+      - name: Ls files
+        run: ls generated
