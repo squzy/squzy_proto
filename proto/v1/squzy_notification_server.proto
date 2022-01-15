@@ -5,7 +5,7 @@ package squzy.v1.notification;
 import "google/protobuf/empty.proto";
 import "proto/v1/shared.proto";
 
-option go_package = "api";
+option go_package = "github.com/squzy/squzy_proto;proto";
 
 service NotificationManager {
   // protolint:disable:next MAX_LINE_LENGTH

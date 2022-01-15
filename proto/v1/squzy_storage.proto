@@ -10,7 +10,7 @@ import "proto/v1/squzy_application_monitoring.proto";
 import "proto/v1/squzy_incident_server.proto";
 import "proto/v1/squzy_monitoring.proto";
 
-option go_package = "api";
+option go_package = "github.com/squzy/squzy_proto;proto";
 
 service Storage {
   //To save info about checkers

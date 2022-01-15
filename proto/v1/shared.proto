@@ -2,7 +2,7 @@ syntax = 'proto3';
 
 package squzy.v1.shared;
 
-option go_package = "api";
+option go_package = "github.com/squzy/squzy_proto;proto";
 
 enum ComponentOwnerType {
   COMPONENT_OWNER_TYPE_UNSPECIFIED = 0;

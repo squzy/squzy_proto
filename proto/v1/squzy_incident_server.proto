@@ -9,6 +9,8 @@ import "proto/v1/squzy_agent_server.proto";
 import "proto/v1/squzy_application_monitoring.proto";
 import "proto/v1/squzy_monitoring.proto";
 
+option go_package = "github.com/squzy/squzy_proto;proto";
+
 service IncidentServer {
   rpc CreateRule(CreateRuleRequest) returns (Rule);
   rpc GetRuleById(RuleIdRequest) returns (Rule);
