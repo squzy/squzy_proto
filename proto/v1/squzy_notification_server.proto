@@ -37,7 +37,10 @@ enum NotificationMethodStatus {
 message NotifyRequest {
   string incident_id = 1;
   squzy.v1.shared.ComponentOwnerType owner_type = 2;
+  // It is rule id
   string owner_id = 3;
+  // Added for user purpose
+  string rule_name = 4;
 }
 
 message WebHookMethod {
