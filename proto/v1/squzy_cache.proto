@@ -1,0 +1,27 @@
+syntax = 'proto3';
+
+package squzy.v1.cache;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/squzy/squzy_proto;proto";
+
+service Cache {
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc InsertScheduleWithId(InsertScheduleWithIdRequest) returns (google.protobuf.Empty);
+  // protolint:disable:next MAX_LINE_LENGTH
+  rpc GetScheduleById (GetScheduleWithIdRequest) returns (google.protobuf.Empty);
+
+}
+
+message InsertScheduleWithIdRequest {
+  string id = 1;
+}
+
+message GetScheduleWithIdRequest {
+  string id = 1;
+}
+
+message GetScheduleWithIdResponse {
+  google.protobuf.Timestamp schedule_time = 1;
+}
