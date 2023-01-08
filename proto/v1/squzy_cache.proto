@@ -10,7 +10,7 @@ service Cache {
   // protolint:disable:next MAX_LINE_LENGTH
   rpc InsertScheduleWithId(InsertScheduleWithIdRequest) returns (google.protobuf.Empty);
   // protolint:disable:next MAX_LINE_LENGTH
-  rpc GetScheduleById (GetScheduleWithIdRequest) returns (google.protobuf.Empty);
+  rpc GetScheduleById (GetScheduleWithIdRequest) returns (GetScheduleWithIdResponse);
 
 }
 
