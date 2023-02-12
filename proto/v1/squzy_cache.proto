@@ -11,6 +11,7 @@ service Cache {
   rpc InsertScheduleWithId(InsertScheduleWithIdRequest) returns (google.protobuf.Empty);
   // protolint:disable:next MAX_LINE_LENGTH
   rpc GetScheduleById (GetScheduleWithIdRequest) returns (GetScheduleWithIdResponse);
+  rpc DeleteScheduleById (DeleteScheduleWithIdRequest) returns (google.protobuf.Empty);
 
 }
 
@@ -26,4 +27,8 @@ message GetScheduleWithIdRequest {
 
 message GetScheduleWithIdResponse {
   google.protobuf.Timestamp scheduled_next = 1;
+}
+
+message DeleteScheduleWithIdRequest {
+  string id = 1;
 }
