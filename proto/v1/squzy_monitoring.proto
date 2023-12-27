@@ -65,6 +65,10 @@ enum SchedulerType {
   SITE_MAP = 4;
   HTTP_JSON_VALUE = 5;
   SSL_EXPIRATION = 6;
+  MONGO = 7;
+  POSTGRES = 8;
+  CASSANDRA = 9;
+  MYSQL = 10;
 }
 
 message GetSchedulerByIdRequest {
@@ -88,6 +92,10 @@ message Scheduler {
     HttpConfig http = 10;
     HttpJsonValueConfig http_value = 11;
     SslExpirationConfig ssl_expiration = 12;
+    DbConfig mongo = 13;
+    DbConfig postgres = 14;
+    DbConfig cassandra = 15;
+    DbConfig mysql = 16;
   }
 }
 
@@ -108,6 +116,15 @@ message TcpConfig {
 message SslExpirationConfig {
   string host = 1;
   int32 port = 3;
+}
+
+message DbConfig {
+  string host = 1;
+  int32 port = 2;
+  string user = 3;
+  string password = 4;
+  string db_name = 5;
+  string cluster = 6;
 }
 
 message GrpcConfig {
@@ -157,6 +174,10 @@ message AddRequest {
     HttpConfig http = 7;
     HttpJsonValueConfig http_value = 8;
     SslExpirationConfig ssl_expiration = 9;
+    DbConfig mongo = 10;
+    DbConfig postgres = 11;
+    DbConfig cassandra = 12;
+    DbConfig mysql = 13;
   }
 }
 
