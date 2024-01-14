@@ -169,11 +169,14 @@ message HtmlValueConfig {
   repeated Field fields = 4;
   enum HtmlValueParseType {
     HTML_PARSE_VALUE_UNSPECIFIED = 0;
-    STRING = 1;
-    INT = 2;
-    INT64 = 3;
-    FLOAT = 4;
-    FLOAT64 = 5;
+    BOOL = 1;
+    STRING = 2;
+    INT = 3;
+    INT64 = 4;
+    FLOAT = 5;
+    FLOAT64 = 6;
+    ARRAY = 7;
+    OBJECT = 8;
   }
   message Field {
     HtmlValueParseType type = 1;
