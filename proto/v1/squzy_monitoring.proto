@@ -69,6 +69,7 @@ enum SchedulerType {
   POSTGRES = 8;
   CASSANDRA = 9;
   MYSQL = 10;
+  HTML = 11;
 }
 
 message GetSchedulerByIdRequest {
