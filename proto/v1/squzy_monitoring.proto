@@ -166,7 +166,7 @@ message HtmlValueConfig {
   string method = 1;
   string url = 2;
   map<string, string> headers = 3;
-  repeated Field fields = 4;
+  repeated Selector selectors = 4;
   enum HtmlValueParseType {
     HTML_PARSE_VALUE_UNSPECIFIED = 0;
     BOOL = 1;
@@ -178,7 +178,7 @@ message HtmlValueConfig {
     ARRAY = 7;
     OBJECT = 8;
   }
-  message Field {
+  message Selector {
     HtmlValueParseType type = 1;
     string path = 2;
   }
